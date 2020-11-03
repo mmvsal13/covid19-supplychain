@@ -22,15 +22,13 @@ contract TokenFactory is AccessControl {
     Token[] public tokenArray;
 
     // id => (owner => balance)
-    mapping(uint256 => mapping(address => uint256)) internal balances; // look at later
-
-    // Necessary for ERC1155
-    mapping(uint256 => address) internal tokenToOwner;
-    mapping(address => uint256) internal ownerTokenCount;
+    // Each NFT has a unique id
+    // balance: 1 if the owner has it, 0 if it doesn't
+    mapping(uint256 => mapping(address => uint256)) internal balances;
 
     modifier ownsToken(uint256 _tokenId) {
         require(
-            tokenToOwner[_tokenId] == msg.sender,
+            // TODO,
             "You don't own the token"
         );
         _;

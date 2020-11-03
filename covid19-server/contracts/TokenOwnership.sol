@@ -14,8 +14,6 @@ import '@openzeppelin/contracts/utils/Address.sol';
 
 contract TokenOwnership is TokenFactory, SupportsInterface, IERC1155 {
 
-    
-
     /* Reference: https://github.com/enjin/erc-1155/blob/master/contracts/ERC1155.sol
                   https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol
                   the second implimentation is based on the first implimentation, using either is probably fine
