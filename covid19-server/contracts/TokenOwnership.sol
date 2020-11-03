@@ -7,12 +7,14 @@ import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
 import '@openzeppelin/contracts/math/SafeMath.sol';
 import '@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol';
 import '@openzeppelin/contracts/utils/Address.sol';
+// convert the link to github to deploy on Remix to test;
+// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol";
 
 // copy pasted most from :https://github.com/enjin/erc-1155/blob/master/contracts/ERC1155.sol
  // check later to ensure code is actually right
  // probably needs modifications
 
-contract TokenOwnership is TokenFactory, SupportsInterface, IERC1155 {
+contract TokenOwnership is TokenFactory, SupportsInterface, IERC1155, ERC1155Pausable {
 
     /* Reference: https://github.com/enjin/erc-1155/blob/master/contracts/ERC1155.sol
                   https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol
@@ -187,25 +189,50 @@ contract TokenOwnership is TokenFactory, SupportsInterface, IERC1155 {
         // If you want predictable revert reasons consider using low level _to.call() style instead so the revert does not bubble up and you can revert yourself on the ERC1155_BATCH_ACCEPTED test.
         require(ERC1155TokenReceiver(_to).onERC1155BatchReceived(_operator, _from, _ids, _values, _data) == ERC1155_BATCH_ACCEPTED, "contract returned an unknown value from onERC1155BatchReceived");
     }
-}
 
     //EVENTS
 
-    event TransferSingle(operator, from, to, id, value){
+    event TransferSingle(operator, from, to, id, value);
+    event TransferBatch(operator, from, to, ids, values);
+    event ApprovalForAll(account, operator, approved);
+    event URI(value, id);
 
+    // ERC1155 Pausable
+/**
+    modifier whenNotPaused(){
+        /**Modifier to make a function callable only when the contract is not paused.
+        Requirements:
+        The contract must not be paused. 
     }
 
-    event TransferBatch(operator, from, to, ids, values){
-
+    modifier whenPaused() {
+        //Modifier to make a function callable only when the contract is paused.
+        //Requirements:
+        //The contract must be paused.
     }
 
-    event ApprovalForAll(account, operator, approved){
-
+    internal constructor() {
+        //Initializes the contract in unpaused state.
     }
 
-    event URI(value, id){
-
+    public paused() returns bool {
+        //Returns true if the contract is paused, and false otherwise.
     }
 
+    internal _pause() {
+        //require not paused
+    }
 
+    internal _unpause() {
+        //require paused
+    }
+
+    event Paused(address account) {
+        //Emitted when the pause is triggered by account.
+    }
+
+    event Unpaused(address account) {
+
+    }
+ */
 }
