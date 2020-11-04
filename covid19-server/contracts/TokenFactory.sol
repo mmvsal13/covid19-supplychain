@@ -4,6 +4,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract TokenFactory is AccessControl {
     struct Token {
+        uint256 tokenId;
         uint256 vaccineCount;
         /* like an ENUM:
             M = Recieved by manufacturer
@@ -16,17 +17,20 @@ contract TokenFactory is AccessControl {
             */
         string status;
         string comments;
-        address[] previousOwners;
+        string previousOwners;
     }
 
     Token[] public tokenArray;
-    
 
     // id => (owner => balance)
     // Each NFT has a unique id
     // balance: 1 if the owner has it, 0 if it doesn't
     mapping(uint256 => mapping(address => uint256)) internal balances;
     mapping(address => uint256) internal ownerTokenCount;
+    
+    bytes32 public constant MINTERS = keccak256('MINTERS');
+    
+    event MintToken(uint256 idStart, uint256 idEnd, uint256 vaccineCount);
 
     modifier ownsToken(uint256 _tokenId) {
         require(
@@ -82,19 +86,18 @@ contract TokenFactory is AccessControl {
         return result;
     }
 
-    function newToken(_vaccineCount, _numTokens) external onlyMinters {
+    function newToken(uint _vaccineCount, uint _numTokens) external onlyMinters {
         uint256 idStart = tokenArray.length;
-        for (uint256 i = 0; i < tokens; i++) {
-            tokenArray.push(Token( tokenArray.length));
+        for (uint256 i = 0; i < _numTokens; i++) {
+            tokenArray.push(Token(tokenArray.length, _vaccineCount, 'F', '', ''));
             uint256 id = tokenArray.length - 1;
-            tokenToOwner[id] = msg.sender;
+            balances[id][msg.sender] = 1;
             ownerTokenCount[msg.sender]++;
         }
-        emit MintToken(idStart, idStart + tokens - 1, _status, _limit, 0);
-
+        emit MintToken(idStart, idStart + _numTokens - 1, _vaccineCount);
     }
-
-    function setStatus(_tokenId, _newStatus) ownsToken(_tokenId) {
+    
+    function setStatus(_tokenId, _newStatus) public ownsToken(_tokenId) {
         // For someone to do
         //letter that represents where vaccine is, takes in string and change sttus of token to be that string
         token = tokenArray[_tokenId];
@@ -102,7 +105,7 @@ contract TokenFactory is AccessControl {
         // Melissa
     }
 
-    function setVaccineCount(uint _tokenId, uint _newCount) ownsToken(_tokenId) {
+    function setVaccineCount(uint _tokenId, uint _newCount) public ownsToken(_tokenId) {
         // For someone to do
         //take in number and set that to be tokens count 
         token = tokenArray[_tokenId];
@@ -111,7 +114,7 @@ contract TokenFactory is AccessControl {
         // Melissa
     }
 
-    function addTransaction(uint _tokenId, address _prevOwner) ownsToken(_tokenid) {
+    function addTransaction(uint _tokenId, address _prevOwner) public ownsToken(_tokenid) {
         // Updates the previous owners array 
         //take token id and change how many tokens one address has 
         //add the prev_owner on to the array of addresses
