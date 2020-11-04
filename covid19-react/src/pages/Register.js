@@ -1,7 +1,7 @@
 import React from 'react';
 import './../App.css';
 import React, { useState } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function Register() {
@@ -61,7 +61,7 @@ function Register() {
                 type="password"
               />
             </FormGroup>
-            <Button variant="primary" disabled={!initialValidation()} type="submit" onClick={this.props.onClick}>
+            <Button variant="primary" disabled={!initialValidation()} type="submit" onClick={handleSubmit}>
                     Register
             </Button>
           </form>
@@ -70,7 +70,7 @@ function Register() {
     
 
 
-    return <div style={{ fontSize: 30, fontWeight: 'bold' }}>Please Register lmao</div>;
+    //return <div style={{ fontSize: 30, fontWeight: 'bold' }}>Please Register lmao</div>;
 }
 
 export default Register;
