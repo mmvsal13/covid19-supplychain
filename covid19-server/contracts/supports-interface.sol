@@ -1,6 +1,8 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.6.0;
 
-import "@openzeppelin/contracts/introspection/IERC165.sol";
+//import "@openzeppelin/contracts/introspection/IERC165.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/introspection/IERC165.sol";
+
 
 // SPDX-License-Identifier: UNLICENSED
 /**

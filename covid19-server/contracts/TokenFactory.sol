@@ -1,6 +1,7 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.6.0;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
+//import "@openzeppelin/contracts/access/AccessControl.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol";
 
 contract TokenFactory is AccessControl {
     struct Token {
@@ -97,30 +98,30 @@ contract TokenFactory is AccessControl {
         emit MintToken(idStart, idStart + _numTokens - 1, _vaccineCount);
     }
     
-    function setStatus(_tokenId, _newStatus) public ownsToken(_tokenId) {
+    
+    function setStatus(uint _tokenId, string calldata _newStatus) public ownsToken(_tokenId) {
         // For someone to do
         //letter that represents where vaccine is, takes in string and change sttus of token to be that string
-        token = tokenArray[_tokenId];
-        token.status = _newStatus;
+        tokenArray[_tokenId].status = _newStatus;
         // Melissa
     }
+    
 
     function setVaccineCount(uint _tokenId, uint _newCount) public ownsToken(_tokenId) {
         // For someone to do
         //take in number and set that to be tokens count 
-        token = tokenArray[_tokenId];
-        token.vaccineCount = _newCount;
+        tokenArray[_tokenId].vaccineCount = _newCount;
         //in the future restrict - might get rid of this function so that once fda approves token amt it can never be changed
         // Melissa
     }
 
-    function addTransaction(uint _tokenId, address _prevOwner) public ownsToken(_tokenid) {
+    function addTransaction(uint _tokenId, address _prevOwner) public ownsToken(_tokenId) {
         // Updates the previous owners array 
         //take token id and change how many tokens one address has 
         //add the prev_owner on to the array of addresses
         //in another file we can take care of transactional logic
-        token = tokenArray[_tokenId];
-        token.previousOwners.push(_prevOwner);
+        tokenArray[_tokenId].previousOwners = string(abi.encodePacked(tokenArray[_tokenId].previousOwners, _prevOwner));
+        // figure out how to add string
         // Melissa
     }
 }

@@ -1,20 +1,27 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.6.0;
 
 import "./TokenFactory.sol";
 import './supports-interface.sol';
 
-import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
-import '@openzeppelin/contracts/math/SafeMath.sol';
-import '@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol';
-import '@openzeppelin/contracts/utils/Address.sol';
+//import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
+//import '@openzeppelin/contracts/math/SafeMath.sol';
+//import '@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol';
+//import '@openzeppelin/contracts/utils/Address.sol';
 // convert the link to github to deploy on Remix to test;
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol";
+
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/IERC1155.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/IERC1155Receiver.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Address.sol";
 
 // copy pasted most from :https://github.com/enjin/erc-1155/blob/master/contracts/ERC1155.sol
  // check later to ensure code is actually right
  // probably needs modifications
 
-contract TokenOwnership is TokenFactory, SupportsInterface, IERC1155, ERC1155Pausable {
+ // implement ERC1155Pausable later
+
+contract TokenOwnership is TokenFactory, SupportsInterface, IERC1155  {
 
     /* Reference: https://github.com/enjin/erc-1155/blob/master/contracts/ERC1155.sol
                   https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol
