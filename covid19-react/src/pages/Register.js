@@ -33,7 +33,7 @@ function Register() {
             console.log(error);
           });
     }
-    
+    //maybe also add helpful links to get people to make metamask acct 
     return (
         <div className="Register">
           <form onSubmit={handleSubmit}>

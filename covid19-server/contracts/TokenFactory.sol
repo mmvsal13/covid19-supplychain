@@ -26,7 +26,7 @@ contract TokenFactory is AccessControl {
     // id => (owner => balance)
     // Each NFT has a unique id
     // balance: 1 if the owner has it, 0 if it doesn't
-    mapping(uint256 => mapping(address => uint256)) internal balances;
+    mapping(uint256 => mapping(address => uint256)) internal _balances;
     mapping(address => uint256) internal ownerTokenCount;
     
     bytes32 public constant MINTERS = keccak256('MINTERS');
@@ -35,7 +35,7 @@ contract TokenFactory is AccessControl {
 
     modifier ownsToken(uint256 _tokenId) {
         require(
-            (balances[_tokenId][msg.sender] == 1),
+            (_balances[_tokenId][msg.sender] == 1),
             "You don't own the token"
         );
         _;
@@ -79,7 +79,7 @@ contract TokenFactory is AccessControl {
         uint256[] memory result = new uint256[](ownerTokenCount[_owner]);
         uint256 counter = 0;
         for (uint256 i = 0; i < tokenArray.length; i++) {
-            if (balances[i][_owner] == 1) {
+            if (_balances[i][_owner] == 1) {
                 result[counter] = i;
                 counter++;
             }
@@ -88,11 +88,12 @@ contract TokenFactory is AccessControl {
     }
 
     function newToken(uint _vaccineCount, uint _numTokens) external onlyMinters {
+        require(_vaccineCount != 0 && _numTokens != 0, "Must enter vaccine count and number of tokens to mint");
         uint256 idStart = tokenArray.length;
         for (uint256 i = 0; i < _numTokens; i++) {
             tokenArray.push(Token(tokenArray.length, _vaccineCount, 'F', '', ''));
             uint256 id = tokenArray.length - 1;
-            balances[id][msg.sender] = 1;
+            _balances[id][msg.sender] = 1;
             ownerTokenCount[msg.sender]++;
         }
         emit MintToken(idStart, idStart + _numTokens - 1, _vaccineCount);

@@ -1,30 +1,30 @@
+// SPDX-License-Identifier: MIT
+
 pragma solidity ^0.6.0;
 
-import "./TokenFactory.sol";
-
-//import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
-//import '@openzeppelin/contracts/math/SafeMath.sol';
-//import '@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol';
-//import '@openzeppelin/contracts/utils/Address.sol';
-// convert the link to github to deploy on Remix to test;
-// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol";
-
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/IERC1155.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/IERC1155MetadataURI.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/IERC1155Receiver.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/math/SafeMath.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Address.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155Receiver.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155Receiver.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/introspection/ERC165.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/GSN/Context.sol"; 
 
-// copy pasted most from :https://github.com/enjin/erc-1155/blob/master/contracts/ERC1155.sol
- // check later to ensure code is actually right
- // probably needs modifications
 
- // implement ERC1155Pausable later
-
-contract TokenOwnership is TokenFactory, IERC1155, ERC165 {
+/**
+ *
+ * @dev Implementation of the basic standard multi-token.
+ * See https://eips.ethereum.org/EIPS/eip-1155
+ * Originally based on code by Enjin: https://github.com/enjin/erc-1155
+ *
+ * _Available since v3.1._
+ */
+contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     using SafeMath for uint256;
     using Address for address;
+
+    // Mapping from token ID to account balances
+    mapping (uint256 => mapping(address => uint256)) private _balances;
 
     // Mapping from account to operator approvals
     mapping (address => mapping(address => bool)) private _operatorApprovals;
@@ -73,7 +73,7 @@ contract TokenOwnership is TokenFactory, IERC1155, ERC165 {
      * Clients calling this function must replace the `\{id\}` substring with the
      * actual token type ID.
      */
-    function uri(uint256) external view returns (string memory) {
+    function uri(uint256) external view override returns (string memory) {
         return _uri;
     }
 
@@ -411,44 +411,4 @@ contract TokenOwnership is TokenFactory, IERC1155, ERC165 {
 
         return array;
     }
-
-
-    // ERC1155 Pausable
-/**
-    modifier whenNotPaused(){
-        /**Modifier to make a function callable only when the contract is not paused.
-        Requirements:
-        The contract must not be paused. 
-    }
-
-    modifier whenPaused() {
-        //Modifier to make a function callable only when the contract is paused.
-        //Requirements:
-        //The contract must be paused.
-    }
-
-    internal constructor() {
-        //Initializes the contract in unpaused state.
-    }
-
-    public paused() returns bool {
-        //Returns true if the contract is paused, and false otherwise.
-    }
-
-    internal _pause() {
-        //require not paused
-    }
-
-    internal _unpause() {
-        //require paused
-    }
-
-    event Paused(address account) {
-        //Emitted when the pause is triggered by account.
-    }
-
-    event Unpaused(address account) {
-
-    }
- */
 }
