@@ -14,21 +14,21 @@ This File provides the name of the contract, and is the parent contract for all 
 
 This File calls functions from the migrations folder to tell what truffle should do on Infura
 
-### supports-interface.sol
-
-Provides access to the ERC 1155 library
-
-### TokenFactory.sol
-
-Creates and edits tokens
-
 ### Token OwnerShip.sol
 
-Contains all ERC 1155 functionally:
-implements abstract ERC 1155 contract methods.
+Contains the smart contract information to mint, transact, check owner, and all other functions
 
 ## migrations
 
 Contains JS code to enable compiling
 
-### 1_initial_migration.js
+## src
+
+Contains source code for server and frontend code
+
+### models
+
+### routes
+
+countains the aut, request, and token routers of the API endpoints
+

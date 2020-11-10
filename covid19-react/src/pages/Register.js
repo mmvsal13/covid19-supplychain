@@ -8,13 +8,22 @@ import { Auth } from '../types';
 
 let web3 = undefined; // Will hold the web3 instance
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Web3 from 'web3';
+import axios from 'axios'
+
+import { Auth } from '../types';
+
+let web3 = undefined;
 
 function Register() {
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState("");
+<<<<<<< HEAD
     const [loading, setLoading] = useState("");
     const axios = require('axios').default;
+=======
+>>>>>>> 7ff2346ddfaa78da2c87b26146e54158630fd113
 
     async function handleLogin(){
    //const { onLoggedIn } = this.props;
@@ -76,7 +85,22 @@ function Register() {
         return name.length > 0 && address.length > 0 && password.length > 0;
     }
 
+<<<<<<< HEAD
     async function handleSubmit(event) {
+=======
+    function handleLogin(event) {
+
+      //checks to see if metamask is installed
+      if (!window.ethereum) { 
+        window.alert('Please install MetaMask first.');
+        return;
+      }
+      //send fetch request to user public address
+      //checks if user public address is in database
+    }
+
+    function handleSubmit(event) {
+>>>>>>> 7ff2346ddfaa78da2c87b26146e54158630fd113
         
         axios.post('/register', {
             name: name,
@@ -95,7 +119,7 @@ function Register() {
             console.log(error);
           });
     }
-    
+    //maybe also add helpful links to get people to make metamask acct 
     return (
       <div className="registration-page">
         <div className="LogIn">
@@ -133,6 +157,7 @@ function Register() {
                     Register
             </Button>
           </form>
+<<<<<<< HEAD
         </div>
         </div>
       );
@@ -143,3 +168,5 @@ function Register() {
 }
 
 export default Register;
+=======
+>>>>>>> 7ff2346ddfaa78da2c87b26146e54158630fd113
