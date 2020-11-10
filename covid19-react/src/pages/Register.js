@@ -3,15 +3,31 @@ import './../App.css';
 import React, { useState } from "react";
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Web3 from 'web3';
+import axios from 'axios'
+
+import { Auth } from '../types';
+
+let web3 = undefined;
 
 function Register() {
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState("");
-    const axios = require('axios').default;
 
     function initialValidation() {
         return name.length > 0 && address.length > 0 && password.length > 0;
+    }
+
+    function handleLogin(event) {
+
+      //checks to see if metamask is installed
+      if (!window.ethereum) { 
+        window.alert('Please install MetaMask first.');
+        return;
+      }
+      //send fetch request to user public address
+      //checks if user public address is in database
     }
 
     function handleSubmit(event) {
