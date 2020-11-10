@@ -81,12 +81,3 @@ function Register() {
                     Register
             </Button>
           </form>
-        </div>
-      );
-    
-
-
-    //return <div style={{ fontSize: 30, fontWeight: 'bold' }}>Please Register lmao</div>;
-}
-
-export default Register;
