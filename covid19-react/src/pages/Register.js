@@ -1,19 +1,13 @@
-import React from 'react';
 import './../App.css';
 import React, { useState } from 'react';
 import { Form, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import Web3 from 'web3';
-
-import { Auth } from '../types';
-
-let web3 = undefined; // Will hold the web3 instance
-// import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Web3 from 'web3';
 import axios from 'axios';
 
 import { Auth } from '../types';
 
-let web3 = undefined;
+let web3 = undefined; // Will hold the web3 instance
+// import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function Register() {
     const [name, setName] = useState('');
