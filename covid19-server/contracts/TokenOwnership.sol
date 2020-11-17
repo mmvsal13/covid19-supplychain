@@ -1,12 +1,10 @@
 pragma solidity ^0.6.0;
 
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import '@openzeppelin/contracts/access/AccessControl.sol';
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol";
-
-
-contract NewCOVIDCoin is ERC1155, AccessControl {
+contract TokenOwnership is ERC1155, AccessControl {
 
     uint256 currentId = 0;
     bytes32 public constant MINTERS = keccak256('MINTERS');
