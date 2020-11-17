@@ -32,8 +32,6 @@ router.post("/createTokenBox", (req, res) => {
 //Do we need to update all of this address info each time we deploy a new contract?
 // This might be good: https://medium.com/coinmonks/ethereum-tutorial-sending-transaction-via-nodejs-backend-7b623b885707
 
-*/
-// I'm not sure which one we should be using
 // Get All TokenBox Data for Regulator to see
 router.get("/getAllTokenBox", (req, res) => {
     TokenBox.find({}, (err, result) => {
