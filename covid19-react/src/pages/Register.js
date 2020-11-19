@@ -1,19 +1,23 @@
 import './../App.css';
 import React, { useState } from 'react';
-import { Form, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import Web3 from 'web3';
-import axios from 'axios';
+//import { Form, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+//import Web3 from 'web3';
+//import axios from 'axios';
 
-import { Auth } from '../types';
+//import { Auth } from '../types';
 
 let web3 = undefined; // Will hold the web3 instance
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function Register() {
+   
+    /*
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState('');
+
+    /*
 
     async function handleLogin() {
         //const { onLoggedIn } = this.props;
@@ -68,7 +72,7 @@ function Register() {
           window.alert(err);
           this.setState({ loading: false });
         });
-        */
+        
     }
 
     async function initialValidation() {
@@ -103,6 +107,7 @@ function Register() {
             .catch(function (error) {
                 console.log(error);
             });
+        
     }
     //maybe also add helpful links to get people to make metamask acct
     return (
@@ -150,6 +155,8 @@ function Register() {
             </div>
         </div>
     );
+    */
 }
 
 export default Register;
+
