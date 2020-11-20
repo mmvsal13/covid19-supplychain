@@ -5,21 +5,26 @@ const mongoose = require('mongoose');
 const authRouter = require('./routes/authRouter')
 const requestRouter = require('./routes/requestRouter')
 const tokenRouter = require('./routes/tokenRouter')
+const cors = require("cors")
 
 const port = process.env.PORT ? process.env.PORT : 4000;
 
-// mongoose.connect(process.env.MONGOOSE, { useNewUrlParser: true, useUnifiedTopology: true });
-
-// const db = mongoose.connection;
-// db.once('open', () => {
-//     console.log('DB connected successfully!');
-// });
-// db.on('error', (err) => {
-//     console.error(`Error while connecting to DB: ${err.message}`);
-// });
-
-const app = express();
+const uri = "mongodb+srv://expendable-1:Xt5hO3RmPoeeWzTL@cluster0.egngy.mongodb.net/test?retryWrites=true&w=majority"
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+mongoose.connect(uri, {
+  useNewUrlParser: true
+}).catch(err => {
+    console.log("Mongodb first connection failed: " + err.stack);
+});
+
+const connection = mongoose.connection;
+
+connection.once("open", function() {
+  console.log("Connection with MongoDB was successful");
+});
+
 
 app.use('/api/auth/', authRouter);
 app.use('/api/request/', requestRouter);
@@ -30,3 +35,24 @@ app.listen(port, () => {
 });
 
 module.exports = { app };
+
+// Routes
+//not sure if we need routes
+
+
+//one click registration
+//user clicks sign in button, fetch an api call to get the user's randomly 
+//generated nonce, if it doenst return anything, get them to sign up
+//check whether or not the address is registered
+//if not, redirect to a login page
+
+//require metamask
+const Web3 = require("web3");
+const ethEnabled = () => {
+  if (window.ethereum) {
+    window.web3 = new Web3(window.ethereum);
+    window.ethereum.enable();
+    return true;
+  }
+  return false;
+}
