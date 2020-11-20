@@ -37,6 +37,7 @@ function App() {
             </Route>
             <Route path="/manufacturer">
                 <div>manufacturer specific page, comes off of distributor home page</div>
+                <Manufacturer/>
             </Route>
             <Route path="/users">
                 {/*Gives users the ability to upload csv files*/}

@@ -17,7 +17,7 @@ function Register() {
     const [loading, setLoading] = useState('');
 
     async function handleLogin() {
-        //const { onLoggedIn } = this.props;
+        const { onLoggedIn } = this.props;
 
         // Check if MetaMask is installed
         if (!window.ethereum) {
