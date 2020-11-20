@@ -4,6 +4,7 @@ import './../App.css';
 import React, { useState, useEffect } from 'react'
 //import './App.css';
 import LoadingScreen from './LoadingScreen.js' 
+import { Link } from 'react-router-dom';
 
 function Home() {
     const [loading, setLoading] = useState(true)
@@ -15,12 +16,23 @@ function Home() {
   return (
     <>
     {loading === false ? (
-    <div style={{ fontSize: 30, fontWeight: 'bold' }}>Hello!</div>
+    <div style={{ fontSize: 30, fontWeight: 'bold' }}>Hello!
+    {/*I put this in as a doorway to my page*/}
+      <div>
+        <Link to="/Manufacturer">
+          <button>Manufacturer!</button>
+        </Link>
+      </div>
+    </div>
       ) : (
         <LoadingScreen />
       )}
       </>
   );
+}
+
+function link() {
+
 }
 
 export default Home;
