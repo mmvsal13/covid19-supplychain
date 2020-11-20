@@ -1,9 +1,10 @@
 import React from 'react';
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import "./DummyApproveRequests.js"
+import './DummyApproveRequests.js';
+import { Layout } from 'antd';
 
-import { Layout, Header, Footer, Sider, Content } from antd;
+const { Header, Footer, Sider, Content } = Layout;
 
 function Approve_requests() {
     return (
@@ -12,7 +13,9 @@ function Approve_requests() {
             <Layout>
                 <Sider>left sidebar</Sider>
                 <Content>
-                    ReactDOM.render(<Table columns={columns} dataSource={data} />, mountNode);
+                    {/* ReactDOM.render(
+                    <Table columns={columns} dataSource={data} />, mountNode); */}
+                    {/* Kentaro this is broken rn */}
                 </Content>
                 <Sider>right sidebar</Sider>
             </Layout>
