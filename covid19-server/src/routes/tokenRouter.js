@@ -1,19 +1,34 @@
 const express = require('express');
 require('dotenv').config();
-
+const multer = require('multer');
 const router = express.Router();
 
 //Load TokenBox Model
-const TokenBox = require("../models/TokenBox")
+const TokenBox = require('../models/TokenBox');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads');
+    },
+    filename: function (req, file, cb) {
+        // You could rename the file name
+        // cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+
+        // You could use the original name
+        cb(null, file.originalname);
+    },
+});
+
+var upload = multer({ storage: storage });
 
 router.get('/', (req, res) => {
-    return res.status(200).send("Covid19 Supplychain Token Router")
-})
+    return res.status(200).send('Covid19 Supplychain Token Router');
+});
 
 //later add auth variable to check who sent it
 // Create TokenBox
 // also need to mint token from TokenOwnership
-router.post("/createTokenBox", (req, res) => {
+router.post('/createTokenBox', (req, res) => {
     let vCount = req.body.vaccineCount;
     let stat = req.body.status;
     let Id = req.body.tokenId;
@@ -24,49 +39,59 @@ router.post("/createTokenBox", (req, res) => {
         status: stat,
         tokenId: Id,
         previousOwners: prevOwners,
-        currentOwner: currOwner
-    })
-    newTokenBox.save().then(newTokenBox => res.json(data = newTokenBox)).catch(err => console.log(err))
-})
+        currentOwner: currOwner,
+    });
+    newTokenBox
+        .save()
+        .then((newTokenBox) => res.json((data = newTokenBox)))
+        .catch((err) => console.log(err));
+});
 
 //Do we need to update all of this address info each time we deploy a new contract?
 // This might be good: https://medium.com/coinmonks/ethereum-tutorial-sending-transaction-via-nodejs-backend-7b623b885707
 
 // Get All TokenBox Data for Regulator to see
-router.get("/getAllTokenBox", (req, res) => {
+router.get('/getAllTokenBox', (req, res) => {
     TokenBox.find({}, (err, result) => {
         if (err) {
-            res.send(err)
+            res.send(err);
         } else {
-            res.send(result)
+            res.send(result);
         }
-    })
-})
+    });
+});
 
-//Get TokenBox by Owner 
-router.get("/getTokenBoxByOwner", (req, res) => {
-    let currOwner = req.body.currentOwner
-    TokenBox.find({currOwner: currentOwner}, (err, result) => {
+//Get TokenBox by Owner
+router.get('/getTokenBoxByOwner', (req, res) => {
+    let currOwner = req.body.currentOwner;
+    TokenBox.find({ currOwner: currentOwner }, (err, result) => {
         if (err) {
-            res.send(err)
+            res.send(err);
         } else {
-            res.send(result)
+            res.send(result);
         }
-    })
-})
+    });
+});
 
 //get all TokenBox by recent transfer date
-router.get("/getAllTokenBoxRecentOrder", (req, res) => {
-    let currOwner = req.body.currentOwner
+router.get('/getAllTokenBoxRecentOrder', (req, res) => {
+    let currOwner = req.body.currentOwner;
     TokenBox
-// Query Date obj: https://mongoosejs.com/docs/tutorials/dates.html
-        .find({}).sort({recentTransferDate: -1 }, (err, result) => {
+        // Query Date obj: https://mongoosejs.com/docs/tutorials/dates.html
+        .find({})
+        .sort({ recentTransferDate: -1 }, (err, result) => {
             if (err) {
-                res.send(err)
+                res.send(err);
             } else {
-                res.send(result)
+                res.send(result);
             }
-    })
-})
+        });
+});
+
+router.post('/uploadCSV', upload.single('csv'), (req, res, next) => {
+    return res.json({
+        csv: req.file.path,
+    });
+});
 
 module.exports = router;
