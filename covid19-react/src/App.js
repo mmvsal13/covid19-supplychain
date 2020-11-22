@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.less';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Register from './pages/Register';
@@ -37,7 +37,7 @@ function App() {
             </Route>
             <Route path="/manufacturer">
                 <div>manufacturer specific page, comes off of distributor home page</div>
-                <Manufacturer/>
+                <Manufacturer />
             </Route>
             <Route path="/users">
                 {/*Gives users the ability to upload csv files*/}

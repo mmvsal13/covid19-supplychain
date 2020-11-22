@@ -1,4 +1,3 @@
-import './../App.css';
 import React, { useState } from 'react';
 import { Form, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Web3 from 'web3';
@@ -10,7 +9,6 @@ let web3 = undefined; // Will hold the web3 instance
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function Register() {
-   
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
@@ -53,23 +51,21 @@ function Register() {
         fetch();
         //`${process.env.BACKEND_URL}/users?publicAddress=${publicAddress}`
         //fetch user
-            console.log("hi")
-        .then((response) => response.json())
-        // If yes, retrieve it. If no, create it.
-        .then((users) =>
-          users.length ? users[0] : this.handleSignup(publicAddress)
-        )
-        // Popup MetaMask confirmation modal to sign message
-        .then(this.handleSignMessage)
-        // Send signature to backend on the /auth route
-        .then(this.handleAuthenticate)
-        // Pass accessToken back to parent component (to save it in localStorage)
-        .then(onLoggedIn)
-        .catch((err) => {
-          window.alert(err);
-          this.setState({ loading: false });
-        });
-        
+        console
+            .log('hi')
+            .then((response) => response.json())
+            // If yes, retrieve it. If no, create it.
+            .then((users) => (users.length ? users[0] : this.handleSignup(publicAddress)))
+            // Popup MetaMask confirmation modal to sign message
+            .then(this.handleSignMessage)
+            // Send signature to backend on the /auth route
+            .then(this.handleAuthenticate)
+            // Pass accessToken back to parent component (to save it in localStorage)
+            .then(onLoggedIn)
+            .catch((err) => {
+                window.alert(err);
+                this.setState({ loading: false });
+            });
     }
 
     async function initialValidation() {
@@ -94,7 +90,9 @@ function Register() {
                 </Button>
             </div>
             <div className="Register">
-                <a className="MakeAccount" href = "">I don't have an account</a> 
+                <a className="MakeAccount" href="">
+                    I don't have an account
+                </a>
             </div>
         </div>
     );
