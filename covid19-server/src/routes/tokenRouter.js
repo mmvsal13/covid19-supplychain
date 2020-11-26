@@ -2,6 +2,8 @@ const express = require('express');
 require('dotenv').config();
 const multer = require('multer');
 const router = express.Router();
+const fs = require('fs');
+const Papa = require('papaparse');
 
 //Load TokenBox Model
 const TokenBox = require('../models/TokenBox');
@@ -88,10 +90,28 @@ router.get('/getAllTokenBoxRecentOrder', (req, res) => {
         });
 });
 
-router.post('/uploadCSV', upload.single('csv'), (req, res, next) => {
+router.post('/uploadCSV', upload.single('csv'), (req, res) => {
     return res.json({
         csv: req.file.path,
     });
+});
+
+router.post('/batchTransferTokens', (req, res) => {
+    const { csv } = req.body;
+    if (!csv) {
+        return res.status(400).json({ csv: 'CSV path not found' });
+    }
+
+    try {
+        const file = fs.readFileSync(csv, 'utf-8');
+        const { data } = Papa.parse(file);
+        console.log(data[0]);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send(err);
+    }
+
+    return res.status(200).json({ success: true });
 });
 
 module.exports = router;
