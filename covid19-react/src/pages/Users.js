@@ -3,6 +3,7 @@ import { Button, Tabs, Input, Upload, message } from 'antd';
 import { LoadingOutlined, PaperClipOutlined } from '@ant-design/icons';
 import Navbar from '../components/navbar';
 import axios from 'axios';
+// import { data, columns } from "/regulator/DummyApproveRequests.js"
 
 const { TabPane } = Tabs;
 const { Dragger } = Upload;
@@ -15,7 +16,7 @@ function Users() {
     const submit = async () => {
         console.log('clicked');
         message.loading('Sending transactions');
-        await axios.post('http://localhost:4000/api/token/batchTransferTokens', { csv: csvURL });
+        await axios.post('http://localhost:4000/api/token/batchTransferTokens', { csv: csvURL, recipient });
         message.success('Transactions successfully sent');
     };
 

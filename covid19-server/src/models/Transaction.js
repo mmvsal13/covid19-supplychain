@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const options = {collection: "accounts"} // idk what this is 
-//how do you add empty spot to befilled out/ 
 let Transaction = new Schema({
         from: {
             type: String
@@ -15,10 +13,12 @@ let Transaction = new Schema({
             type: Number
         },
         TokenID: {
-            type: Number
+            type: Array
         },
+        comments: {
+            type: String
+        }
         //referencest to the list of Transacction objects
-
     },
     options
 )

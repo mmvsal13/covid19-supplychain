@@ -26,14 +26,11 @@ function App() {
     return (
         <Switch>
             {/* Maybe add navbar for regulator-sub pages then users-mfg pages*/}
-            <Route path="/regulator/approve_requests">
-                <div>View requests to get QR codes from companies</div>
+            <Route path="/regulator/ApproveRequests">
+                <ApproveRequests />
             </Route>
             <Route path="/regulator">
-                <div>
-                    regulator home page - view useful statistics and maps of distribution centers
-                    here
-                </div>
+                <Regulator />
             </Route>
             <Route path="/manufacturer">
                 <Manufacturer />
