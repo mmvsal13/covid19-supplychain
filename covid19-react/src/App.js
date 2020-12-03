@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.less';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Manufacturer from './pages/Manufacturer';
 import Users from './pages/Users';
 import Regulator from './pages/regulator/Regulator.js';
 import ApproveRequests from './pages/regulator/ApproveRequests.js';
-
+import History from './pages/History';
 // https://reactrouter.com/web/guides/primary-components
 
 /* Sample component libraries
@@ -40,7 +40,7 @@ function App() {
                 <Users />
             </Route>
             <Route path="/history/:id">
-                <div>check history for token id</div>
+                <History />
             </Route>
             <Route path="/not_logged_in">
                 <div>You need to sign in to see this page</div>

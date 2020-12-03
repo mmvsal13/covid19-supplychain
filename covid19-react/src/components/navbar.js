@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu } from 'antd';
 import { ClockCircleOutlined, MenuOutlined, TransactionOutlined } from '@ant-design/icons';
-
+import { Link } from 'react-router-dom';
 const { SubMenu } = Menu;
 
 function Navbar() {
@@ -25,10 +25,10 @@ function Navbar() {
                 </Menu.ItemGroup>
             </SubMenu>
             <Menu.Item key="transaction" icon={<TransactionOutlined />}>
-                Transactions
+                <Link to="/users">Transactions</Link>
             </Menu.Item>
             <Menu.Item key="clock" icon={<ClockCircleOutlined />}>
-                History
+                <Link to="/history">History</Link>
             </Menu.Item>
         </Menu>
     );
