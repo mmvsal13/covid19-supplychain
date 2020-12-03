@@ -8,7 +8,7 @@ import axios from 'axios';
 let web3 = undefined; // Will hold the web3 instance
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-function Register() {
+function Login() {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
@@ -123,4 +123,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default Login;
