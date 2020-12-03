@@ -14,6 +14,18 @@ function Register() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState('');
 
+    handleAuthenticate = (
+        publicAddress,
+        signature,
+     ) =>
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, { //change
+          body: JSON.stringify({ publicAddress, signature }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+        }).then((response) => response.json());
+
     async function handleLogin() {
         const { onLoggedIn } = this.props;
 
@@ -52,10 +64,10 @@ function Register() {
         //`${process.env.BACKEND_URL}/users?publicAddress=${publicAddress}`
         //fetch user
         console
-            .log('hi')
+            .log('Fetching user')
             .then((response) => response.json())
             // If yes, retrieve it. If no, create it.
-            .then((users) => (users.length ? users[0] : this.handleSignup(publicAddress)))
+            .then((users) => (users.length ? users[0] : this.handleSignup))
             // Popup MetaMask confirmation modal to sign message
             .then(this.handleSignMessage)
             // Send signature to backend on the /auth route
@@ -72,15 +84,28 @@ function Register() {
         return name.length > 0 && address.length > 0 && password.length > 0;
     }
 
-    function handleLogin(event) {
-        //checks to see if metamask is installed
-        if (!window.ethereum) {
-            window.alert('Please install MetaMask first.');
-            return;
+    handleSignMessage = async (
+        publicAddress,
+        nonce,
+      ) => {
+        try {
+          const signature = await web3.eth.personal.sign(
+            `I am signing my one-time nonce: ${nonce}`,
+            publicAddress,
+            '' // MetaMask will ignore the password argument here
+          );
+    
+          return { publicAddress, signature };
+        } catch (err) {
+          throw new Error('You need to sign the message to be able to log in.');
         }
-        //send fetch request to user public address
-        //checks if user public address is in database
-    }
+      };
+
+    handleSignup = () => {
+        window.open("/register");
+      };
+
+    
     //maybe also add helpful links to get people to make metamask acct
     return (
         <div className="registration-page">
@@ -90,9 +115,9 @@ function Register() {
                 </Button>
             </div>
             <div className="Register">
-                <a className="MakeAccount" href="">
+                <Link to="/register" className="MakeAccount" href="">
                     I don't have an account
-                </a>
+                </Link>
             </div>
         </div>
     );
