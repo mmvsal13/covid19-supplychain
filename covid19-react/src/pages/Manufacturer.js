@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import LoadingScreen from './LoadingScreen.js';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/navbar.js';
+import FormMan from '../components/form.js';
+
 
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
@@ -21,29 +24,11 @@ function Manufacturer() {
     return (
         <>
             {loading === false ? (
+
                 <div style={{ fontSize: 30, fontWeight: 'bold' }}>
+                    <Navbar/>
                     Welcome!
-                    <div>
-                        <form onSubmit={handleSubmit}>
-                            <label>
-                                Address:
-                                <input
-                                    type="text"
-                                    value={address}
-                                    onChange={(e) => setAddress(e.target.value)}
-                                />
-                            </label>
-                            <label>
-                                Amount:
-                                <input
-                                    type="number"
-                                    value={amount}
-                                    onChange={(e) => setAmount(e.target.value)}
-                                />
-                            </label>
-                            <input type="submit" value="Submit" />
-                        </form>
-                    </div>
+                    <FormMan/>
                     <div>
                         <Link to="/">
                             <button>Return home</button>
