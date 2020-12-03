@@ -34,14 +34,19 @@ function LoginPage(props) {
 		setAuthState({ auth: undefined });
 	};
 
+    //took out
+    /*
+    {authState ? (
+						<h1>uhhhh</h1>
+					) : (
+						<Login onLoggedIn={this.handleLoggedIn} /> //probably dont need the handleloggedin part
+                    )}
+    */
+   
 		return (
 			<div className="Signin">
 				<div className="App-signin">
-					{authState ? (
-						<h1>uhhhh</h1>
-					) : (
-						<Login onLoggedIn={this.handleLoggedIn} />
-					)}
+                    <Login onLoggedIn={handleLoggedIn} />
 				</div>
 			</div>
         )

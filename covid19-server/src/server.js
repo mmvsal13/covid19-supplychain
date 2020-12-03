@@ -12,7 +12,6 @@ const port = process.env.PORT ? process.env.PORT : 4000;
 
 const uri =
     'mongodb+srv://expendable-1:Xt5hO3RmPoeeWzTL@cluster0.egngy.mongodb.net/test?retryWrites=true&w=majority';
-const app = express();
 
 mongoose
     .connect(uri, {

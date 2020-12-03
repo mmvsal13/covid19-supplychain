@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Form, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import Web3 from 'web3';
 import axios from 'axios';
 
@@ -8,30 +8,32 @@ import axios from 'axios';
 let web3 = undefined; // Will hold the web3 instance
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-function Login() {
+function Login(props) {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState('');
 
-    handleAuthenticate = (
+    function handleAuthenticate(
         publicAddress,
         signature,
-     ) =>
+     ) {
         fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, { //change
-          body: JSON.stringify({ publicAddress, signature }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-        }).then((response) => response.json());
-
+            body: JSON.stringify({ publicAddress, signature }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            method: 'POST',
+          }).then((response) => response.json());
+     }
+    
     async function handleLogin() {
-        const { onLoggedIn } = this.props;
-
+        const { onLoggedIn } = props;
+        console.log("handling login")
         // Check if MetaMask is installed
         if (!window.ethereum) {
             // what is window
+            console.log("checking for metamask")
             window.alert('Please install MetaMask first.');
             return;
         }
@@ -56,38 +58,42 @@ function Login() {
         }
 
         const publicAddress = coinbase.toLowerCase();
+        console.log(publicAddress)
         setLoading(true);
 
         // Look if user with current publicAddress is already present on backend
 
-        fetch();
-        //`${process.env.BACKEND_URL}/users?publicAddress=${publicAddress}`
-        //fetch user
-        console
-            .log('Fetching user')
-            .then((response) => response.json())
+        fetch(
+        `http://localhost:3000/users?publicAddress=${publicAddress}`,{
+
+            headers: {'Content-Type': 'application/json'},
+            })
+
+            .then((response) => response)
             // If yes, retrieve it. If no, create it.
-            .then((users) => (users.length ? users[0] : this.handleSignup))
+            .then((text) => console.log(text))
+            //.then((users) => (users.length ? users[0] : handleSignup))
             // Popup MetaMask confirmation modal to sign message
-            .then(this.handleSignMessage)
+            .then(handleSignMessage)
             // Send signature to backend on the /auth route
-            .then(this.handleAuthenticate)
+            .then(handleAuthenticate)
             // Pass accessToken back to parent component (to save it in localStorage)
             .then(onLoggedIn)
             .catch((err) => {
                 window.alert(err);
-                this.setState({ loading: false });
+                setLoading(false);
             });
+            
     }
 
     async function initialValidation() {
         return name.length > 0 && address.length > 0 && password.length > 0;
     }
 
-    handleSignMessage = async (
+    async function handleSignMessage (
         publicAddress,
         nonce,
-      ) => {
+      ) {
         try {
           const signature = await web3.eth.personal.sign(
             `I am signing my one-time nonce: ${nonce}`,
@@ -101,7 +107,7 @@ function Login() {
         }
       };
 
-    handleSignup = () => {
+    function handleSignup ()  {
         window.open("/register");
       };
 
@@ -115,9 +121,9 @@ function Login() {
                 </Button>
             </div>
             <div className="Register">
-                <Link to="/register" className="MakeAccount" href="">
+                <Button to="/register" className="MakeAccount" href="">
                     I don't have an account
-                </Link>
+                </Button>
             </div>
         </div>
     );

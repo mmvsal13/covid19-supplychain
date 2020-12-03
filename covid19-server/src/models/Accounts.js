@@ -15,7 +15,7 @@ let companyAccount = new Schema({
             type: String,
             unique: true
         },
-        ethereumAddress: {
+        publicAddress: {
             type: String,
             unique: true,
             allowNull: false,
@@ -41,4 +41,4 @@ let companyAccount = new Schema({
     options
 )
 
-module.exports = mongoose.model('companyAccount', companyAccount)
+module.exports = mongoose.model('companyAccount', User)
