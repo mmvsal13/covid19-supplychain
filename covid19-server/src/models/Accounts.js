@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 
 const t = require("./Transaction");
 
+const role = require("./plugins/Role");
+
+
 const options = {collection: "accounts"} // idk what this is 
 //how do you add empty spot to befilled out/ 
 let companyAccount = new Schema({
@@ -23,5 +26,7 @@ let companyAccount = new Schema({
     },
     options
 )
+companyAccount.plugins(role);
+
 
 module.exports = mongoose.model('companyAccount', companyAccount)

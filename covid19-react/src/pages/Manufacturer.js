@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import LoadingScreen from './LoadingScreen.js';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/navbar.js';
-import FormMan from '../components/form.js';
+import Navbar from '../components/Navbar.js';
+import FormMan from '../components/Form.js';
 
 
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
@@ -14,6 +14,9 @@ function Manufacturer() {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
+        //check to make sure address and amount are valid
+        //upload the request to mongodb
+        //should I even be collecting address/we might already have that stored for the user
         alert(`Submitting Address ${address} and amount ${amount}`);
     };
 
@@ -26,7 +29,7 @@ function Manufacturer() {
             {loading === false ? (
 
                 <div style={{ fontSize: 30, fontWeight: 'bold' }}>
-                    <Navbar/>
+                    <Navbar page={'man'}/>
                     Welcome!
                     <FormMan/>
                     <div>
