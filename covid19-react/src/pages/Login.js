@@ -27,6 +27,64 @@
 //           }).then((response) => response.json());
 //      }
     
+<<<<<<< HEAD
+    async function handleLogin() {
+        const { onLoggedIn } = props;
+        console.log("handling login")
+        // Check if MetaMask is installed
+        if (!window.ethereum) {
+            // what is window
+            console.log("checking for metamask")
+            window.alert('Please install MetaMask first.');
+            return;
+        }
+
+        if (!web3) {
+            try {
+                // Request account access if needed
+                await window.ethereum.enable();
+
+                // We don't know window.web3 version, so we use our own instance of Web3
+                // with the injected provider given by MetaMask
+                web3 = new Web3(window.ethereum);
+            } catch (error) {
+                window.alert('You need to allow MetaMask.');
+                return;
+            }
+        }
+        const coinbase = await web3.eth.getCoinbase();
+        if (!coinbase) {
+            window.alert('Please activate MetaMask first.');
+            return;
+        }
+
+        const publicAddress = coinbase.toLowerCase();
+        console.log(publicAddress)
+        setLoading(true);
+
+        // Look if user with current publicAddress is already present on backend
+
+        fetch(
+        `http://localhost:4000/api/users?publicAddress=${publicAddress}`,{
+
+            headers: {'Content-Type': 'application/json'},
+            })
+
+            .then((response) => response)
+            // If yes, retrieve it. If no, create it.
+            .then((text) => console.log(text))
+            //.then((users) => (users.length ? users[0] : handleSignup))
+            // Popup MetaMask confirmation modal to sign message
+            .then(handleSignMessage)
+            // Send signature to backend on the /auth route
+            .then(handleAuthenticate)
+            // Pass accessToken back to parent component (to save it in localStorage)
+            .then(onLoggedIn)
+            .catch((err) => {
+                window.alert(err);
+                setLoading(false);
+            });
+=======
 //     async function handleLogin() {
 //         const { onLoggedIn } = props;
 //         console.log("handling login")
@@ -83,6 +141,7 @@
 //                 window.alert(err);
 //                 setLoading(false);
 //             });
+>>>>>>> 7d4a19695ca2138c88396851a55021ec73dc3d28
             
 //     }
 
