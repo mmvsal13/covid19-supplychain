@@ -5,15 +5,19 @@ const Schema = mongoose.Schema;
 let Transaction = new Schema({
     from: {
         type: String,
+        required: true,
     },
     to: {
         type: String,
+        required: true,
     },
     date: {
-        type: Number,
+        type: String,
+        required: true,
     },
-    TokenID: {
+    tokenId: {
         type: Array,
+        required: true,
     },
     comments: {
         type: String,
