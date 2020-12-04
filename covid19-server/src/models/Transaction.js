@@ -1,26 +1,24 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const options = {collection: "accounts"} // idk what this is 
-//how do you add empty spot to befilled out/ 
 let Transaction = new Schema({
-        from: {
-            type: String
-        },
-        to: {
-            type: String
-        },
-        date: {
-            type: Number
-        },
-        TokenID: {
-            type: Number
-        },
-        //referencest to the list of Transacction objects
-
+    from: {
+        type: String,
     },
-    options
-)
+    to: {
+        type: String,
+    },
+    date: {
+        type: Number,
+    },
+    TokenID: {
+        type: Array,
+    },
+    comments: {
+        type: String,
+    },
+    //referencest to the list of Transacction objects
+});
 
-module.exports = mongoose.model('companyAccount', companyAccount)
+module.exports = mongoose.model('Transaction', Transaction);

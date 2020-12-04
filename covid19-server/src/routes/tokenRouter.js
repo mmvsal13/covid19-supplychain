@@ -4,8 +4,7 @@ const multer = require('multer');
 const router = express.Router();
 const fs = require('fs');
 const Papa = require('papaparse');
-
-//Load TokenBox Model
+const Transaction = require('../models/Transaction');
 const TokenBox = require('../models/TokenBox');
 
 const storage = multer.diskStorage({
@@ -96,16 +95,34 @@ router.post('/uploadCSV', upload.single('csv'), (req, res) => {
     });
 });
 
-router.post('/batchTransferTokens', (req, res) => {
-    const { csv } = req.body;
+router.post('/batchTransferTokens', async (req, res) => {
+    const { csv, recipient } = req.body;
     if (!csv) {
         return res.status(400).json({ csv: 'CSV path not found' });
+    } else if (!recipient) {
+        return res.status(400).json({ recipient: 'Recipient not found' });
     }
 
     try {
         const file = fs.readFileSync(csv, 'utf-8');
         const { data } = Papa.parse(file);
-        console.log(data[0]);
+
+        let promises = data[0].map(async (val) => {
+            let token = TokenBox.find({ tokenId: val });
+            token.previousOwners.push(token.currentOwner);
+            token.currentOwner = recipient;
+            token.recentTransferDate = new Date();
+            await token.save();
+        });
+        await Promise.all(promises);
+
+        let newTransaction = new Transaction({
+            from: 'tbd',
+            to: recipient,
+            date: new Date().toISOString(),
+            tokenId: data[0],
+        });
+        await newTransaction.save();
     } catch (err) {
         console.log(err);
         return res.status(500).send(err);

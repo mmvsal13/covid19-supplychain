@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Tabs, Input, Upload, message } from 'antd';
 import { LoadingOutlined, PaperClipOutlined } from '@ant-design/icons';
-import Navbar from '../components/navbar';
+import Navbar from '../components/Navbar';
 import axios from 'axios';
+import UserHeader from '../components/UserHeader';
+// import { data, columns } from "/regulator/DummyApproveRequests.js"
 
 const { TabPane } = Tabs;
 const { Dragger } = Upload;
@@ -15,7 +17,10 @@ function Users() {
     const submit = async () => {
         console.log('clicked');
         message.loading('Sending transactions');
-        await axios.post('http://localhost:4000/api/token/batchTransferTokens', { csv: csvURL });
+        await axios.post('http://localhost:4000/api/token/batchTransferTokens', {
+            csv: csvURL,
+            recipient,
+        });
         message.success('Transactions successfully sent');
     };
 
@@ -61,62 +66,45 @@ function Users() {
         <div style={{ width: '100vw', height: '100vh', backgroundColor: '#E9FFFA' }}>
             <Navbar />
             <div style={{ margin: '5vw' }}>
-                <Tabs
-                    onChange={() => null}
-                    type="card"
-                    centered
-                    tabBarStyle={{ fontWeight: 'bold', fontSize: '200%' }}
+                <UserHeader active="Send" />
+                <div
+                    style={{
+                        width: '90vw',
+                        height: '70vh',
+                        backgroundColor: 'rgba(255, 240, 219, 1)',
+                        borderBottomLeftRadius: '2vw',
+                        borderBottomRightRadius: '2vw',
+                        padding: '3vh 25vw 3vh 25vw',
+                    }}
                 >
-                    <TabPane tab="Request" key="1">
-                        Content of Tab Pane 1
-                    </TabPane>
-                    <TabPane tab="Send" key="2">
-                        <div
-                            style={{
-                                width: '90vw',
-                                height: '70vh',
-                                backgroundColor: 'rgba(255, 240, 219, 1)',
-                                borderBottomLeftRadius: '2vw',
-                                borderBottomRightRadius: '2vw',
-                                padding: '3vh 25vw 3vh 25vw',
-                            }}
+                    <div style={{ fontSize: '20px' }}>Receiver Wallet Address</div>
+                    <Input onChange={(text) => setRecipient(text)} />
+
+                    <div style={{ fontSize: '20px', marginTop: '2vh' }}> Token Information </div>
+                    <div style={{ height: '30vh', width: '100%' }}>
+                        <Dragger
+                            name="csv"
+                            listType="picture-card"
+                            className="avatar-uploader"
+                            showUploadList={false}
+                            action="http://localhost:4000/api/token/uploadCSV"
+                            beforeUpload={beforeUpload}
+                            onChange={handleChange}
                         >
-                            <div style={{ fontSize: '20px' }}>Receiver Wallet Address</div>
-                            <Input onChange={(text) => setRecipient(text)} />
+                            {uploadButton}
+                        </Dragger>
+                    </div>
 
-                            <div style={{ fontSize: '20px', marginTop: '2vh' }}>
-                                {' '}
-                                Token Information{' '}
-                            </div>
-                            <div style={{ height: '30vh', width: '100%' }}>
-                                <Dragger
-                                    name="csv"
-                                    listType="picture-card"
-                                    className="avatar-uploader"
-                                    showUploadList={false}
-                                    action="http://localhost:4000/api/token/uploadCSV"
-                                    beforeUpload={beforeUpload}
-                                    onChange={handleChange}
-                                >
-                                    {uploadButton}
-                                </Dragger>
-                            </div>
-
-                            <div>{csvURL}</div>
-                            <Button
-                                onClick={submit}
-                                style={{ width: '30%', margin: '15vh 35% 0 35%' }}
-                                size="large"
-                                type="primary"
-                            >
-                                SEND
-                            </Button>
-                        </div>
-                    </TabPane>
-                    <TabPane tab="Receive" key="3">
-                        Content of Tab Pane 3
-                    </TabPane>
-                </Tabs>
+                    <div>{csvURL}</div>
+                    <Button
+                        onClick={submit}
+                        style={{ width: '30%', margin: '15vh 35% 0 35%' }}
+                        size="large"
+                        type="primary"
+                    >
+                        SEND
+                    </Button>
+                </div>
             </div>
         </div>
     );

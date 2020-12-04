@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.less';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Register from './pages/Register';
-import Manufacturer from './pages/Manufacturer';
+import Request from './pages/Request';
+import Status from './pages/Status';
 import Users from './pages/Users';
 import Regulator from './pages/regulator/Regulator.js';
 import ApproveRequests from './pages/regulator/ApproveRequests.js';
-
+import History from './pages/History';
+import LoginPage from'./pages/LoginPage';
 // https://reactrouter.com/web/guides/primary-components
 
 /* Sample component libraries
@@ -26,30 +28,33 @@ function App() {
     return (
         <Switch>
             {/* Maybe add navbar for regulator-sub pages then users-mfg pages*/}
-            <Route path="/regulator/approve_requests">
-                <div>View requests to get QR codes from companies</div>
+            <Route path="/regulator/ApproveRequests">
+                <ApproveRequests />
             </Route>
             <Route path="/regulator">
-                <div>
-                    regulator home page - view useful statistics and maps of distribution centers
-                    here
-                </div>
+                <Regulator />
             </Route>
-            <Route path="/manufacturer">
-                <Manufacturer />
+            <Route path="/status">
+                <Status />
+            </Route>
+            <Route path="/request">
+                <Request />
             </Route>
             <Route path="/users">
                 {/*Gives users the ability to upload csv files*/}
                 <Users />
             </Route>
             <Route path="/history/:id">
-                <div>check history for token id</div>
+                <History />
             </Route>
             <Route path="/not_logged_in">
                 <div>You need to sign in to see this page</div>
             </Route>
             <Route path="/register">
                 <Register />
+            </Route>
+            <Route path="/login">
+                <LoginPage />
             </Route>
             <Route path="/">
                 <Home />
