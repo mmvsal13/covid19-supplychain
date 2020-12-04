@@ -44,7 +44,7 @@ function App() {
                 {/*Gives users the ability to upload csv files*/}
                 <Users />
             </Route>
-            <Route path="/history/:id">
+            <Route path="/history">
                 <History />
             </Route>
             <Route path="/not_logged_in">
