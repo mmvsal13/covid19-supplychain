@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import { Layout } from 'antd';
 import { Table, Tag, Space } from 'antd';
-import Navbar from '../../components/Navbar.js';
+import Navbar from '../../components/navbar.js';
 
 
 const columns = [

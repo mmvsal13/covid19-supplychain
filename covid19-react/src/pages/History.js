@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Input, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar.js';
 
 function History() {
     const [loading, setLoading] = useState(true);
