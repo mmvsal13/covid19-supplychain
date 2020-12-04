@@ -18,6 +18,11 @@ function Home() {
                     Hello!
                     {/*I put this in as a doorway to my page*/}
                     <div>
+                        <Link to="/login">
+                            <button>Login!</button>
+                        </Link>
+                    </div>
+                    <div>
                         <Link to="/Manufacturer">
                             <button>Manufacturer!</button>
                         </Link>

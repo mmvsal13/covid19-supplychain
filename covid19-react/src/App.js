@@ -8,6 +8,7 @@ import Users from './pages/Users';
 import Regulator from './pages/regulator/Regulator.js';
 import ApproveRequests from './pages/regulator/ApproveRequests.js';
 import History from './pages/History';
+import LoginPage from'./pages/LoginPage';
 // https://reactrouter.com/web/guides/primary-components
 
 /* Sample component libraries
@@ -47,6 +48,9 @@ function App() {
             </Route>
             <Route path="/register">
                 <Register />
+            </Route>
+            <Route path="/login">
+                <LoginPage />
             </Route>
             <Route path="/">
                 <Home />
