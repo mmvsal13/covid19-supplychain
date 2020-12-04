@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import { Layout } from 'antd';
 import { Table, Tag, Space, Card } from 'antd';
-import Navbar from '../../components/navbar.js';
+import Navbar from '../../components/Navbar.js';
 import ReactDOM from 'react-dom';
 import { Line } from '@antv/g2plot';
 import { DataView } from '@antv/data-set';
