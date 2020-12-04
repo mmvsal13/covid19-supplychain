@@ -21,6 +21,9 @@ let Request = new Schema({
         },
         Client: {
             type: String
+        },
+        Tag: {
+            type: String
         }
     },
 )

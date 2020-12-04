@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar.js';
 import UserHeader from '../components/UserHeader.js';
 import { Button, Tabs, Input, Upload, message } from 'antd';
 import axios from 'axios';
+import { P } from '@antv/g2plot';
 
 
 
@@ -17,6 +18,7 @@ function Request() {
     const [orderID, setID] = useState("");
     const [quantity, setQuanity] = useState(0);
     const [client, setClient] = useState("");
+    const tag = "PENDING";
 
 
     const submit = async () => {
@@ -27,16 +29,19 @@ function Request() {
         console.log(client);
 
 
-        message.loading('Requesting tokens');
+        // message.loading('Requesting tokens');
+        //approval happens automatically so should i do it here
         await axios.post('http://localhost:4000/api/request/sendRequest', {
-            "ShipmentID": "shipID",
-            "Date": "jiji",
-            "Order": "orderID",
-            "Quantity": 0,
-            "Client": "client"
+            "ShipmentID": shipID,
+            "Date": date,
+            "Order": orderID,
+            "Quantity": quantity,
+            "Client": client,
+            "Tag": tag,
         });
         message.success('The request has been received');
     };
+
 
     // useEffect(() => {
     //     setTimeout(() => setLoading(false), 6000);

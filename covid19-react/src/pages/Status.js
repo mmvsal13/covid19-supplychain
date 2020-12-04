@@ -5,8 +5,9 @@ import Navbar from '../components/Navbar.js';
 import UserHeader from '../components/UserHeader.js';
 import { Button, Tabs, Input, Upload, message } from 'antd';
 import { Table, Tag, Space } from 'antd';
+import axios from 'axios';
 
-
+const client = "a";
 
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
@@ -68,11 +69,11 @@ function Status() {
     ]
 
     const getData = async () => {
-        console.log('clicked');
-        message.loading('Requesting tokens');
-        // await axios.post('http://localhost:4000/api/token/batchTransferTokens', {
-        // });
-        message.success('The request has been received');
+        let data = await axios.get('http://localhost:4000/api/request/getRequestByOwner', {
+            "Client": client
+        });
+        console.log(data);
+        return data;
         //retrieve actual data from server
     };
 
@@ -80,6 +81,7 @@ function Status() {
         <>
         <div style={{ width: '100vw', height: '100vh', backgroundColor: '#E9FFFA' }}>
             <Navbar/>
+            {console.log(getData)}
             <div style={{ margin: '5vw' }}>
                 <UserHeader active="Status" />
                 <div
@@ -92,7 +94,7 @@ function Status() {
                         padding: '3vh 5vw 3vh 5vw',
                     }}  
                 >
-                    <Table columns={columns} dataSource={data} size="middle"/>
+                    <Table columns={columns} dataSource={getData} size="middle"/>
                 </div>
             </div>
         </div>
