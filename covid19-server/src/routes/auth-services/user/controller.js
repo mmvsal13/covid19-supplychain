@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 
-//import { User } from '../../models/user.model'; should inport user from models
+import { User } from '../../models/Accounts.js'; 
 
 export const find = (req, res, next) => {
-	// If a query string ?publicAddress=... is given, then filter results
+    // If a query string ?publicAddress=... is given, then filter results
+    console.log("finding publicAddress")
 	const whereClause =
 		req.query && req.query.publicAddress
 			? {
@@ -16,7 +17,7 @@ export const find = (req, res, next) => {
 		.catch(next);
 };
 
-export const get = (req=, res, next) => {
+export const get = (req, res, next) => {
 	// AccessToken payload is in req.user.payload, especially its `id` field
 	// UserId is the param in /users/:userId
 	// We only allow user accessing herself, i.e. require payload.id==userId

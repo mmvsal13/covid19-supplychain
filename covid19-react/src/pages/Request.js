@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar.js';
 import UserHeader from '../components/UserHeader.js';
 import { Button, Tabs, Input, Upload, message } from 'antd';
+import axios from 'axios';
 
 
 
@@ -21,8 +22,13 @@ function Request() {
     const submit = async () => {
         console.log('clicked');
         message.loading('Requesting tokens');
-        // await axios.post('http://localhost:4000/api/token/batchTransferTokens', {
-        // });
+        await axios.post('http://localhost:4000/api/token/sendRequest', {
+            "shipID": shipID,
+            "amount": amount,
+            "orderID": orderID,
+            "quantity": quantity,
+            "client": client,
+        });
         message.success('The request has been received');
     };
 
