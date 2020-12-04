@@ -139,7 +139,9 @@ function Login(props) {
                     justifyContent: 'space-around',
                     flexDirection: 'column'
                 }}>
-                   <img src = '/image-1.png' />
+                   <img src = "image-1.png" />
+                   
+
                 <h3 style = {{
                         fontSize: '40px',
                         color: '#620E0E',
