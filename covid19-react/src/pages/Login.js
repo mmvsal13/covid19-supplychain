@@ -100,6 +100,10 @@ function Login(props) {
             publicAddress,
             '' // MetaMask will ignore the password argument here
           );
+        } catch(err){
+            console.log(err)
+        }
+    }
 
     function handleSignup ()  {
         window.open("/register");
@@ -123,4 +127,4 @@ function Login(props) {
     );
 }
 
- export default Login;
+export default Login;
