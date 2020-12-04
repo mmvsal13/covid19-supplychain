@@ -4,14 +4,8 @@ const Schema = mongoose.Schema;
 
 const t = require("./Transaction");
 
-<<<<<<< HEAD
-=======
 // const role = require("./plugins/Role");
 
-
-const options = {collection: "accounts"} // idk what this is 
->>>>>>> 7d4a19695ca2138c88396851a55021ec73dc3d28
-//how do you add empty spot to befilled out/ 
 let User = new Schema({
         companyName: {
             type: String,
