@@ -7,6 +7,7 @@ const authRouter = require('./routes/auth-services/auth/authRouter')
 const requestRouter = require('./routes/requestRouter')
 const tokenRouter = require('./routes/tokenRouter')
 const cors = require("cors")
+const userRouter = require('./routes/auth-services/user/userRouter.js')
 
 const port = process.env.PORT ? process.env.PORT : 4000;
 
@@ -35,6 +36,7 @@ app.use(cors());
 app.use('/api/auth/', authRouter);
 app.use('/api/request/', requestRouter);
 app.use('/api/token/', tokenRouter);
+app.use('/api/users/', tokenRouter);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
