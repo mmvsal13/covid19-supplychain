@@ -7,8 +7,6 @@ import { Button, Tabs, Input, Upload, message } from 'antd';
 import { Table, Tag, Space } from 'antd';
 import axios from 'axios';
 
-const client = "a";
-
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function Status() {
@@ -16,25 +14,30 @@ function Status() {
 
     const columns = [
         {
-            title: 'Request ID',
-            dataIndex: 'name',
-            key: 'name',
-            render: (text) => <a>{text}</a>,
+            title: 'ShipmentID',
+            dataIndex: 'ShipmentID',
+            key: 'ShipmentID',
+            // render: (text) => <a>{text}</a>,
         },
         {
-            title: 'Decision Date',
-            dataIndex: 'amount',
-            key: 'amount',
+            title: 'Date',
+            dataIndex: 'Date',
+            key: 'Date',
         },
         {
-            title: 'Contact Info',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Order ID',
+            dataIndex: 'Order',
+            key: 'Order',
         },
         {
-            title: 'Approved Status',
-            key: 'tags',
-            dataIndex: 'tags',
+            title: 'Quantity',
+            dataIndex: 'Quantity',
+            key: 'Quantity',
+        },
+        {
+            title: 'Status',
+            key: 'Status',
+            dataIndex: 'Status',
                  render: tags => (
                      <>
                          {tags.map((tag) => {
@@ -60,28 +63,27 @@ function Status() {
     //dummy data for now will get data from server in the future
     const data = [
         {
-            key: '1',
-            name: '11898',
-            amount: 6900,
-            address: 'mmvsal13@berkeley.edu',
-            tags: ['REJECTED'],
+            ShipmentID: '1',
+            Date: '11898',
+            Order: 6900,
+            Client: 'mmvsal13@berkeley.edu',
+            Status: ['REJECTED'],
         },
     ]
 
     const getData = async () => {
-        let data = await axios.get('http://localhost:4000/api/request/getRequestByOwner', {
-            "Client": client
-        });
-        console.log(data);
-        return data;
-        //retrieve actual data from server
+        let load = await axios.get('http://localhost:4000/api/request/getRequests');
+        return load;
     };
+        //retrieve actual data from server
 
     return (
         <>
         <div style={{ width: '100vw', height: '100vh', backgroundColor: '#E9FFFA' }}>
             <Navbar/>
-            {console.log(getData)}
+            {console.log('hiiii')}
+            {console.log(getData().then(res => console.log(res.data.requests[0])))}
+            {console.log('proceed after api call')}
             <div style={{ margin: '5vw' }}>
                 <UserHeader active="Status" />
                 <div
@@ -94,12 +96,12 @@ function Status() {
                         padding: '3vh 5vw 3vh 5vw',
                     }}  
                 >
-                    <Table columns={columns} dataSource={getData} size="middle"/>
+                    <Table columns={columns} dataSource={data} size="middle"/>
                 </div>
             </div>
         </div>
         </>
-        );  
+    );  
 }
 
 export default Status;

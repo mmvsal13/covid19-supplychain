@@ -38,7 +38,7 @@ function Request() {
             "Quantity": quantity,
             "Client": client,
             "Tag": tag,
-        });
+        }).then(response => console.log(response.data));
         message.success('The request has been received');
     };
 
