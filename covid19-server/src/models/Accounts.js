@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const t = require("./Transaction");
 
-const role = require("./plugins/Role");
+// const role = require("./plugins/Role");
 
 
 const options = {collection: "accounts"} // idk what this is 
@@ -43,7 +43,7 @@ let companyAccount = new Schema({
     },
     options
 )
-companyAccount.plugins(role);
+// companyAccount.plugins(role);
 
 
 module.exports = mongoose.model('companyAccount', User)

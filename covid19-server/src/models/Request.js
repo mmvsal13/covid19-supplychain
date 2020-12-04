@@ -4,20 +4,25 @@ const Schema = mongoose.Schema;
 
 const t = require("./Request");
 
-const options = {collection: "accounts"} // idk what this is 
+// const options = {collection: "accounts"} // idk what this is 
 //how do you add empty spot to befilled out/ 
 let Request = new Schema({
-        companyName: {
+        ShipmentID: {
             type: String
         },
-        companyAddress: {
+        Date: {
             type: String
         },
-        Amount: {
+        Order: {
+            type: String
+        },
+        Quantity: {
             type: Number
+        },
+        Client: {
+            type: String
         }
     },
-    options
 )
 
-module.exports = mongoose.model('requests', Request)
+module.exports = mongoose.model('Request', Request)
