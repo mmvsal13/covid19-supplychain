@@ -12,22 +12,28 @@ import axios from 'axios';
 
 function Request() {
     // const [loading, setLoading] = useState(true);
-    const [shipID, setShipID] = useState(0);
-    const [amount, setDate] = useState(0);
-    const [orderID, setID] = useState(0);
+    const [shipID, setShipID] = useState("");
+    const [date, setDate] = useState("");
+    const [orderID, setID] = useState("");
     const [quantity, setQuanity] = useState(0);
-    const [client, setClient] = useState('');
+    const [client, setClient] = useState("");
 
 
     const submit = async () => {
-        console.log('clicked');
+        console.log(shipID);
+        console.log(date);
+        console.log(orderID);
+        console.log(quantity);
+        console.log(client);
+
+
         message.loading('Requesting tokens');
-        await axios.post('http://localhost:4000/api/token/sendRequest', {
-            "shipID": shipID,
-            "amount": amount,
-            "orderID": orderID,
-            "quantity": quantity,
-            "client": client,
+        await axios.post('http://localhost:4000/api/request/sendRequest', {
+            "ShipmentID": "shipID",
+            "Date": "jiji",
+            "Order": "orderID",
+            "Quantity": 0,
+            "Client": "client"
         });
         message.success('The request has been received');
     };
@@ -53,19 +59,19 @@ function Request() {
                     }}  
                 >
                     <div style={{ fontSize: '20px', marginTop: '2vh'}}>Shipment ID</div>
-                    <Input onChange={(Number) => setShipID(Number)} />
+                    <Input onChange={(event) => setShipID(event.target.value)} />
 
                     <div style={{ fontSize: '20px', marginTop: '2vh' }}>Manufacture Date</div>
-                    <Input onChange={(Number) => setDate(Number)} />
+                    <Input onChange={(event) => setDate(event.target.value)} />
 
                     <div style={{ fontSize: '20px', marginTop: '2vh'}}>Order ID</div>
-                    <Input onChange={(Number) => setID(Number)} />
+                    <Input onChange={(event) => setID(event.target.value)} />
 
                     <div style={{ fontSize: '20px', marginTop: '2vh' }}>Quantity</div>
-                    <Input onChange={(Number) => setQuanity(Number)} />
+                    <Input onChange={(event) => setQuanity(event.target.value)} />
 
                     <div style={{ fontSize: '20px', marginTop: '2vh' }}>Client</div>
-                    <Input onChange={(text) => setClient(text)} />
+                    <Input onChange={(event) => setClient(event.target.value)} />
                      
                     <Button
                         onClick={submit}
