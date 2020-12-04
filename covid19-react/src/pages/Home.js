@@ -14,13 +14,17 @@ function Home() {
     return (
         <>
             {loading === false ? (
-                <div style={{ fontSize: 30, fontWeight: 'bold' }}>
-                    Hello!
-                    {/*I put this in as a doorway to my page*/}
-                    <div>
-                        <Link to="/login">
+
+                <div style={{ width: '100vw', height: '100vh', backgroundColor: '#E9FFFA' }}>
+                    
+                    <div className = "home-center"></div>
+                    <div style={{ fontSize: 30, fontWeight: 'bold' }}>
+                        Hello!
+                        <div>
+                            <Link to="/login">
                             <button>Login!</button>
-                        </Link>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             ) : (
