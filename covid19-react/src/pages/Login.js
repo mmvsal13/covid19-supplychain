@@ -64,7 +64,7 @@ function Login(props) {
         // Look if user with current publicAddress is already present on backend
 
         fetch(
-        `http://localhost:3000/users?publicAddress=${publicAddress}`,{
+        `http://localhost:4000/api/users?publicAddress=${publicAddress}`,{
 
             headers: {'Content-Type': 'application/json'},
             })

@@ -4,9 +4,8 @@ const Schema = mongoose.Schema;
 
 const t = require("./Transaction");
 
-const options = {collection: "accounts"} // idk what this is 
 //how do you add empty spot to befilled out/ 
-let companyAccount = new Schema({
+let User = new Schema({
         companyName: {
             type: String,
             unique: true
@@ -19,7 +18,6 @@ let companyAccount = new Schema({
             type: String,
             unique: true,
             allowNull: false,
-            validate: {isLowercase: true}
         },
         supplyChainRole: {
             type: Number
@@ -38,7 +36,6 @@ let companyAccount = new Schema({
             unique: true
         }
     },
-    options
 )
 
-module.exports = mongoose.model('companyAccount', User)
+module.exports = mongoose.model('User', User)

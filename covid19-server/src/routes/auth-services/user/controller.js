@@ -1,8 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
+const express = require('express')
 
-import { User } from '../../models/Accounts.js'; 
+const User = require('../../../models/Accounts.js'); 
 
-export const find = (req, res, next) => {
+
+const find = (req, res, next) => {
     // If a query string ?publicAddress=... is given, then filter results
     console.log("finding publicAddress")
 	const whereClause =
@@ -17,7 +18,7 @@ export const find = (req, res, next) => {
 		.catch(next);
 };
 
-export const get = (req, res, next) => {
+const get = (req, res, next) => {
 	// AccessToken payload is in req.user.payload, especially its `id` field
 	// UserId is the param in /users/:userId
 	// We only allow user accessing herself, i.e. require payload.id==userId
@@ -31,12 +32,12 @@ export const get = (req, res, next) => {
 		.catch(next);
 };
 
-export const create = (req, res, next) =>
+const create = (req, res, next) =>
 	User.create(req.body)
 		.then((user) => res.json(user))
 		.catch(next);
 
-export const patch = (req, res, next) => {
+const patch = (req, res, next) => {
 	// Only allow to fetch current user
 	if ((req).user.payload.id !== +req.params.userId) {
 		return res
@@ -61,3 +62,5 @@ export const patch = (req, res, next) => {
 		})
 		.catch(next);
 };
+let functions = {find, get, create, patch}
+module.exports = functions;
