@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import { Button, Link } from 'antd';
 import Web3 from 'web3';
 import axios from 'axios';
+import Center from '../components/center.js'
 
 //import { Auth } from '../types';
 
@@ -112,18 +113,61 @@ function Login(props) {
     
     //maybe also add helpful links to get people to make metamask acct
     return (
-        <div className="registration-page">
-            <div className="LogIn">
-                <Button variant="primary" type="submit" onClick={handleLogin}>
-                    Log in with Metamask
+
+<div style={{ width: '100vw', height: '100vh', backgroundColor: '#E9FFFA',
+                
+                position: 'absolute',
+        
+        }}>
+            
+            <Center />
+            
+            <div style={{ fontSize: 30, fontWeight: 'bold',
+            position: 'absolute',
+            zIndex: '0',
+            margin: 'auto',
+            top: '50%',
+        left: '50%',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)' 
+        
+        }}>
+                    
+            <div className="LogIn" style = {{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    flexDirection: 'column'
+                }}>
+                   <img src = '/image-1.png' />
+                <h3 style = {{
+                        fontSize: '40px',
+                        color: '#620E0E',
+                        fontWeight: '800',
+                        lineHeight: '60px'
+                    }}>Sign in with Metamask</h3>
+                <Button variant="primary" type="submit" onClick={handleLogin} style = {{
+                        color: 'white',
+                        backgroundColor: '#FB8027',
+                        width: '250px',
+                        height: '65px',
+                        fontSize: '25px' }}>
+                    Continue
                 </Button>
-            </div>
-            <div className="Register">
-                <Button to="/register" className="MakeAccount" href="">
+                <a  style = {{ 
+                    color: '#C71F03',
+                    fontWeight: '600',
+                    fontSize: '20px',
+                    style: 'normal'
+                }}
+                 className="MakeAccount" href="/register">
                     I don't have an account
-                </Button>
+                </a>
+            </div>
+            
             </div>
         </div>
+                        
     );
 }
 
