@@ -22,11 +22,6 @@ function Home() {
                             <button>Login!</button>
                         </Link>
                     </div>
-                    <div>
-                        <Link to="/Manufacturer">
-                            <button>Manufacturer!</button>
-                        </Link>
-                    </div>
                 </div>
             ) : (
                 <LoadingScreen />

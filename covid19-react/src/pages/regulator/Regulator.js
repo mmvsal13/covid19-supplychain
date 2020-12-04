@@ -9,6 +9,7 @@ import { Line } from '@antv/g2plot';
 import { DataView } from '@antv/data-set';
 import * as _ from '@antv/util';
 import insertCss from 'insert-css';
+import originData from './RegulatorChartDummy.json'
 const { Header, Content, Footer, Sider } = Layout;
 
   
@@ -48,14 +49,11 @@ class TrendChart extends React.Component {
     componentDidMount() {
       // Step 2: 创建图表
       const chartDom = this.chartNodeRef.current;
-  
-      fetch('https://gw.alipayobjects.com/os/bmw-prod/c335e0c4-caa5-4c76-a321-20df96b6e5c8.json')
-        .then((res) => res.json())
-        .then((originData) => {
+      {
           const dv = new DataView().source(originData);
           dv.transform({
             type: 'fold',
-            fields: ['USA', 'California', 'BA9C', 'Marin'], // 展开字段集
+            fields: ["Trump COVID Co.", "Ayush Inc.", "Moderna", "Etherium Inc."], // 展开字段集
             key: 'series',
             value: 'value',
           });
@@ -153,7 +151,7 @@ class TrendChart extends React.Component {
             const tooltipItems = data.filter((d) => d.Date === title);
             this.setState({ tooltipItems, activeTooltipTitle: title });
           });
-        });
+        };
     }
   
     changeActiveSeries = (activeSeries) => {

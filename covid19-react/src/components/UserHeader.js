@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 function UserHeader(props) {
     const tabs = [
-        { name: 'Request', url: '' },
+        { name: 'Request', url: '/request' },
         { name: 'Send', url: '/users' },
-        { name: 'Status', url: '/' },
+        { name: 'Status', url: '/status' },
     ];
 
     return (
@@ -19,6 +19,7 @@ function UserHeader(props) {
             }}
         >
             {tabs.map((tab, i) => (
+                <Link to={tab.url}>
                 <div
                     style={{
                         borderTopRightRadius: '10px',
@@ -35,10 +36,9 @@ function UserHeader(props) {
                         justifyContent: 'center',
                     }}
                 >
-                    <Link to={tabs.url} style={{ color: 'black' }}>
-                        {tab.name}
-                    </Link>
+                    <div style={{ color: 'black' }}>{tab.name}</div>
                 </div>
+                </Link>
             ))}
         </div>
     );

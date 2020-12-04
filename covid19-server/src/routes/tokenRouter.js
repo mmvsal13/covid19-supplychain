@@ -74,19 +74,14 @@ router.get('/getTokenBoxByOwner', (req, res) => {
     });
 });
 
-//get all TokenBox by recent transfer date
-router.get('/getAllTokenBoxRecentOrder', (req, res) => {
-    let currOwner = req.body.currentOwner;
-    TokenBox
-        // Query Date obj: https://mongoosejs.com/docs/tutorials/dates.html
-        .find({})
-        .sort({ recentTransferDate: -1 }, (err, result) => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.send(result);
-            }
-        });
+//get Transaction Objects by recent transfer date
+router.get('/getRecentTransactions', async (req, res) => {
+    try {
+        let transactions = await Transaction.find({}).sort({ recentTransferDate: -1 });
+        return res.status(200).json({ success: true, transactions });
+    } catch (e) {
+        return res.status(500).send(e.message);
+    }
 });
 
 router.post('/uploadCSV', upload.single('csv'), (req, res) => {
@@ -97,6 +92,7 @@ router.post('/uploadCSV', upload.single('csv'), (req, res) => {
 
 router.post('/batchTransferTokens', async (req, res) => {
     const { csv, recipient } = req.body;
+
     if (!csv) {
         return res.status(400).json({ csv: 'CSV path not found' });
     } else if (!recipient) {

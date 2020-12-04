@@ -3,7 +3,8 @@ import './App.less';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Register from './pages/Register';
-import Manufacturer from './pages/Manufacturer';
+import Request from './pages/Request';
+import Status from './pages/Status';
 import Users from './pages/Users';
 import Regulator from './pages/regulator/Regulator.js';
 import ApproveRequests from './pages/regulator/ApproveRequests.js';
@@ -33,14 +34,17 @@ function App() {
             <Route path="/regulator">
                 <Regulator />
             </Route>
-            <Route path="/manufacturer">
-                <Manufacturer />
+            <Route path="/status">
+                <Status />
+            </Route>
+            <Route path="/request">
+                <Request />
             </Route>
             <Route path="/users">
                 {/*Gives users the ability to upload csv files*/}
                 <Users />
             </Route>
-            <Route path="/history/:id">
+            <Route path="/history">
                 <History />
             </Route>
             <Route path="/not_logged_in">

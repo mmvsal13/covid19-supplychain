@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Tabs, Input, Upload, message } from 'antd';
 import { LoadingOutlined, PaperClipOutlined } from '@ant-design/icons';
-import Navbar from '../components/navbar';
+import Navbar from '../components/Navbar';
 import axios from 'axios';
 import UserHeader from '../components/UserHeader';
 // import { data, columns } from "/regulator/DummyApproveRequests.js"
