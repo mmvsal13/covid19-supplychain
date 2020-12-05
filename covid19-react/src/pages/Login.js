@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Link } from 'antd';
 import Web3 from 'web3';
 import axios from 'axios';
 import Center from '../components/center.js';
 import Image from './image-1.png';
+import Register from './Register.js'
 //import { Auth } from '../types';
 
 let web3 = undefined; // Will hold the web3 instance
@@ -14,6 +15,7 @@ function Login(props) {
     const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState('');
+    const [goToReg, setGoToReg] = useState(false);
 
     function handleAuthenticate(publicAddress, signature) {
         fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
@@ -68,7 +70,10 @@ function Login(props) {
             .then((response) => response)
             // If yes, retrieve it. If no, create it.
             .then((text) => console.log(text))
-            //.then((users) => (users.length ? users[0] : handleSignup))
+            .then((users) => (users ? users[0] : 
+                
+                    setGoToReg(true)
+            ))
             // Popup MetaMask confirmation modal to sign message
             .then(handleSignMessage)
             // Send signature to backend on the /auth route
@@ -97,13 +102,22 @@ function Login(props) {
         }
     }
 
+    /*
     function handleSignup() {
-        window.open('/register');
+        console.log("going to registration page")
+        useEffect(() => {
+                setGoToReg(true)
+        })
     }
+    */
 
     //maybe also add helpful links to get people to make metamask acct
-    return (
-        <div
+    return ( <>
+    {
+        goToReg === true ? (
+            <Register />
+        ) : (
+            <div
             style={{
                 width: '100vw',
                 height: '100vh',
@@ -167,6 +181,7 @@ function Login(props) {
                             fontWeight: '600',
                             fontSize: '20px',
                             style: 'normal',
+                            
                         }}
                         className="MakeAccount"
                         href="/register"
@@ -176,7 +191,21 @@ function Login(props) {
                 </div>
             </div>
         </div>
+        )
+    } </>
+       
     );
 }
 
 export default Login;
+
+/*
+ window.open('/register');
+            return fetch(`http://localhost:4000/api/users`, {
+                body: JSON.stringify({ publicAddress }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+            }).then((response) => response.json());
+            */
