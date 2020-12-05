@@ -23,10 +23,7 @@ let Request = new Schema({
             type: String
         },
         Tag: {
-            type: String
-        },
-        Key: {
-            type: Number
+            type: [String]
         }
     },
 )

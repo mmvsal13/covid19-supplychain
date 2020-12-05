@@ -16,8 +16,7 @@ router.post('/sendRequest', (req, res) => {
     let orderID = req.body.Order;
     let quant = req.body.Quantity;
     let user = req.body.Client;
-    let id = req.body.Key;
-    let tag = reg.body.Tag;
+    let tag = req.body.Tag;
     let newRequest = new Request({
         ShipmentID: shipID,
         Date: date,
@@ -25,7 +24,6 @@ router.post('/sendRequest', (req, res) => {
         Quantity: quant,
         Client: user,
         Tag: tag,
-        Key: id,
     });
     newRequest
         .save()
@@ -70,15 +68,15 @@ router.get('/getAllStatusRequests', async (req, res) => {
 });
 
 //Gets a request by its key
-router.get('/getRequestByKey', async (req, res) => {
-    let id = req.body.Key;
-    try {
-        let requests = await Request.find({ Key: id }).sort({ Quantity: -1 });
-        return res.status(200).json({ requests });
-    } catch (e) {
-        return res.status(500).send(e.message);
-    }
-});
+// router.get('/getRequestByKey', async (req, res) => {
+//     let id = req.body.Key;
+//     try {
+//         let requests = await Request.find({ Key: id }).sort({ Quantity: -1 });
+//         return res.status(200).json({ requests });
+//     } catch (e) {
+//         return res.status(500).send(e.message);
+//     }
+// });
 
 
 module.exports = router;

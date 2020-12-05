@@ -16,9 +16,7 @@ function Request() {
     const [orderID, setID] = useState('');
     const [quantity, setQuanity] = useState(0);
     const [client, setClient] = useState("");
-    const tag = "PENDING";
-    const key = 0;
-    // const [key, setKey] = useState(0);
+    const tag = ["PENDING"];
 
 
     const submit = async () => {
@@ -27,7 +25,6 @@ function Request() {
         console.log(orderID);
         console.log(quantity);
         console.log(client);
-        console.log(key);
 
         await axios.get('http://localhost:4000/api/request/getRequests')
             .then(response => console.log(response.data));
@@ -43,7 +40,6 @@ function Request() {
             "Quantity": quantity,
             "Client": client,
             "Tag": tag,
-            "Key": key,
         }).then(response => console.log(response.data));
         message.success('The request has been received');
     };
