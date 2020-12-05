@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LoadingScreen from './LoadingScreen.js';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar.js';
+import Navbar from '../components/navbar.js';
 import UserHeader from '../components/UserHeader.js';
 import { Button, Tabs, Input, Upload, message } from 'antd';
 import axios from 'axios';
