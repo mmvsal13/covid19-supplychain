@@ -45,7 +45,7 @@ router.get('/getRequests', async (req, res) => {
     }
 });
 
-//Get all requests for a single user 
+//Get all requests for a single user NOT FUNCTIONAL YET
 router.get('/getRequestsByOwner', async (req, res) => {
     let currUser = req.body.Client;
     try {
@@ -56,7 +56,7 @@ router.get('/getRequestsByOwner', async (req, res) => {
     }
 });
 
-//Gets a certain type of request(All pending, all approved, all denied)
+//Gets a certain type of request(All pending, all approved, all denied) NOT FUNCTIONAL YET
 router.get('/getAllStatusRequests', async (req, res) => {
     let status = req.body.Tag;
     try {
