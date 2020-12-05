@@ -69,7 +69,7 @@ function Status() {
             Client: 'mmvsal13@berkeley.edu',
             Status: ['REJECTED'],
         },
-    ]
+    ];
 
     const getData = async () => {
         let load = await axios.get('http://localhost:4000/api/request/getRequests');
@@ -99,7 +99,7 @@ function Status() {
                     <Table columns={columns} dataSource={data} size="middle"/>
                 </div>
             </div>
-        </div>
+            </div>
         </>
     );  
 }

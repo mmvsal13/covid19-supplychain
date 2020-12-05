@@ -5,7 +5,6 @@ import { Layout } from 'antd';
 import { Table, Tag, Space } from 'antd';
 import Navbar from '../../components/Navbar.js';
 
-
 const columns = [
     {
         title: 'Name',
@@ -27,54 +26,54 @@ const columns = [
         title: 'Tags',
         key: 'tags',
         dataIndex: 'tags',
-             render: tags => (
-                 <>
-                     {tags.map((tag) => {
-                         let color = 'magenta';
-                         if (tag === 'Untrusted') {
-                             color = 'blue';
-                         } else if (tag === 'Distributor') {
-                             color = 'geekblue';
-                         } else if (tag === 'Manufacturer') {
-                             color = 'geekblue';
-                         } else if (tag === 'Retailer') {
-                             color = 'geekblue';
-                         } else if (tag === 'Hospital') {
-                             color = 'geekblue';
-                         } else if (tag === 'Trusted') {
-                             color = 'purple';
-                         } else if (tag === 'Trump') {
-                             color = 'volcano';
-                         } else if (tag === 'BTC tps') {
-                             color = 'green';
-                         } else if (tag === 'VISA tps') {
-                             color = 'green';
-                         } else if (tag === 'Oski') {
-                             color = 'green';
-                         } else if (tag === 'Sus') {
-                             color = 'green';
-                         } else if (tag === 'Simp') {
-                             color = 'green';
-                         }
-                         return (
-                             <Tag color={color} key={tag}>
-                                 {tag.toUpperCase()}
-                             </Tag>
-                         );
-                     })}
-                 </>
-             ),
-         },
-         {
-             title: 'Action',
-             key: 'action',
-             render: (text, record) => (
-                 <Space size="middle">
-                     <a>Approve</a>
-                     <a>Deny</a>
-                     <a>Message</a>
-                 </Space>
-             ),
+        render: (tags) => (
+            <>
+                {tags.map((tag) => {
+                    let color = 'magenta';
+                    if (tag === 'Untrusted') {
+                        color = 'blue';
+                    } else if (tag === 'Distributor') {
+                        color = 'geekblue';
+                    } else if (tag === 'Manufacturer') {
+                        color = 'geekblue';
+                    } else if (tag === 'Retailer') {
+                        color = 'geekblue';
+                    } else if (tag === 'Hospital') {
+                        color = 'geekblue';
+                    } else if (tag === 'Trusted') {
+                        color = 'purple';
+                    } else if (tag === 'Trump') {
+                        color = 'volcano';
+                    } else if (tag === 'BTC tps') {
+                        color = 'green';
+                    } else if (tag === 'VISA tps') {
+                        color = 'green';
+                    } else if (tag === 'Oski') {
+                        color = 'green';
+                    } else if (tag === 'Sus') {
+                        color = 'green';
+                    } else if (tag === 'Simp') {
+                        color = 'green';
+                    }
+                    return (
+                        <Tag color={color} key={tag}>
+                            {tag.toUpperCase()}
+                        </Tag>
+                    );
+                })}
+            </>
+        ),
+    },
+    {
+        title: 'Action',
+        key: 'action',
+        render: (text, record) => (
+            <Space size="middle">
+                <a>Approve</a>
+                <a>Deny</a>
+                <a>Message</a>
+            </Space>
+        ),
     },
 ];
 
@@ -119,13 +118,11 @@ const data = [
 function Approve_requests() {
     return (
         <>
-                <Navbar/>
+            <Navbar />
 
-                    <Table columns={columns} dataSource={data} />
-                    {/* Kentaro this is broken rn */}
-
-                </>
-                
+            <Table columns={columns} dataSource={data} />
+            {/* Kentaro this is broken rn */}
+        </>
     );
 }
 
