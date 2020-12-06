@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
 
 
 router.post('/sendRequest', (req, res) => {
+    let id = req.body.ID;
     let shipID = req.body.ShipmentID;
     let date = req.body.Date;
     let orderID = req.body.Order;
@@ -18,6 +19,7 @@ router.post('/sendRequest', (req, res) => {
     let user = req.body.Client;
     let tag = req.body.Tag;
     let newRequest = new Request({
+        ID: id,
         ShipmentID: shipID,
         Date: date,
         Order: orderID,

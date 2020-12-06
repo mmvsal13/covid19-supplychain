@@ -7,6 +7,9 @@ const t = require("./Request");
 // const options = {collection: "accounts"} // idk what this is 
 //how do you add empty spot to befilled out/ 
 let Request = new Schema({
+        ID: {
+            type: Number
+        },
         ShipmentID: {
             type: String
         },

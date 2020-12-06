@@ -11,10 +11,11 @@ function ApproveRequests() {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     useEffect(() => {
+        //in the future will only be getting tags that are pending
         const getData = async () => {
             await axios.get('http://localhost:4000/api/request/getRequests')
                 .then(res=>setData(res.data.requests));
-            console.log(data);
+            // console.log(data);
             // setLoading(false);
         };
         getData();
@@ -68,13 +69,30 @@ function ApproveRequests() {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a style={{color: 'green'}}>Approve</a>
-                    <a style={{color: 'red'}}>Deny</a>
-                    <a style={{color: 'orange'}}>Message</a>
+                    <a onClick={(event) => approveFunc(event.target.value)} style={{color: 'green'}}>APPROVE</a>
+                    <a onClick={(event) => denyFunc(event.target.value)} style={{color: 'red'}}>DENY</a>
+                    {/* <a onClick={} style={{color: 'orange'}}>Message</a> */}
                 </Space>
             ),
         },
     ];
+
+    function approveFunc(message) {
+        //get request
+        //chage Tag
+        //post with changed tag
+        //call mint function
+    }
+
+    function denyFunc(message) {
+        //get request
+        //change Tag
+        //post with changed tag
+    }
+
+
+
+
 
 
     //dummy data for now will get data from server in the future
@@ -110,5 +128,6 @@ function ApproveRequests() {
     );  
 }
 //rgba(255,255,255, 0.3)
+
 
 export default ApproveRequests;

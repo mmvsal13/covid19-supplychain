@@ -6,11 +6,14 @@ import UserHeader from '../components/UserHeader.js';
 import { Button, Tabs, Input, Upload, message } from 'antd';
 import axios from 'axios';
 import { P } from '@antv/g2plot';
+import { IdcardFilled } from '@ant-design/icons';
+import { getMappingField } from '@antv/g2plot/lib/adaptor/geometries/base';
 
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function Request() {
     // const [loading, setLoading] = useState(true);
+    const [id, setIden] = useState(0);
     const [shipID, setShipID] = useState('');
     const [date, setDate] = useState('');
     const [orderID, setID] = useState('');
@@ -18,22 +21,25 @@ function Request() {
     const [client, setClient] = useState("");
     const tag = ["PENDING"];
 
-
+    useEffect(() => { 
+        const getID = async () => {
+            await axios.get('http://localhost:4000/api/request/getRequests')
+                .then( res => setIden(res.data.requests.length));
+            };
+        getID();
+    });
+    
     const submit = async () => {
+        console.log(id);
         console.log(shipID);
         console.log(date);
         console.log(orderID);
         console.log(quantity);
         console.log(client);
-
-        await axios.get('http://localhost:4000/api/request/getRequests')
-            .then(response => console.log(response.data));
-
-
-
         // message.loading('Requesting tokens');
         //approval happens automatically so should i do it here
         await axios.post('http://localhost:4000/api/request/sendRequest', {
+            "ID": id,
             "ShipmentID": shipID,
             "Date": date,
             "Order": orderID,
@@ -43,6 +49,12 @@ function Request() {
         }).then(response => console.log(response.data));
         message.success('The request has been received');
     };
+
+    // function getID(res) {
+    //     let a = res.length;
+    //     console.log(a);
+    //     setIden(res.length);
+    // }
 
 
     // useEffect(() => {
