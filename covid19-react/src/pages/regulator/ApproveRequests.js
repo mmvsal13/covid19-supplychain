@@ -6,6 +6,7 @@ import { Layout } from 'antd';
 import { Table, Tag, Space } from 'antd';
 import Navbar from '../../components/Navbar.js';
 import { Header } from 'antd/lib/layout/layout';
+import mintFromApproved from './mintApprove';
 
 function ApproveRequests() {
     const [loading, setLoading] = useState(true);
@@ -77,7 +78,7 @@ function ApproveRequests() {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a onClick={(event) => approveFunc(record.ID, record.ShipmentID, record.Date, record.Order, record.Quantity, record.Tag)} 
+                    <a onClick={(event) => approveFunc(record.ID, record.ShipmentID, record.Date, record.Order, record.Quantity, record.Tag, record.Client)} 
                                 style={{color: 'green'}}>APPROVE</a>
                     <a onClick={(event) => denyFunc(record.ID)} style={{color: 'red'}}>DENY</a>
                     {/* <a onClick={} style={{color: 'orange'}}>Message</a> */}
@@ -86,13 +87,16 @@ function ApproveRequests() {
         },
     ];
 
-    function approveFunc(id, shipment, date, order, quant, tag) {
+    function approveFunc(id, shipment, date, order, quant, tag, client) {
         //pass the parameters ^ to minting function
         console.log(id, shipment, date, order, quant, tag);
         //@KENTARO call minting function here
+
+        mintFromApproved(client, quant);
+
         setApprovedID(id);
         console.log(approvedID);
-        deleteRequest();
+        //deleteRequest();
         //postRequest() with updated tag
     }
 
