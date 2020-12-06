@@ -25,6 +25,16 @@ function Status() {
     });
     const columns = [
         {
+            title: 'ID',
+            dataIndex: 'ID',
+            key: 'ID',
+            // render: (text) => <a>{text}</a>,
+        },{
+            title: 'Client',
+            dataIndex: 'Client',
+            key: 'Client',
+            // render: (text) => <a>{text}</a>,
+        },{
             title: 'ShipmentID',
             dataIndex: 'ShipmentID',
             key: 'ShipmentID',

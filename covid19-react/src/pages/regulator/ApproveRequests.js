@@ -6,6 +6,7 @@ import { Layout } from 'antd';
 import { Table, Tag, Space } from 'antd';
 import Navbar from '../../components/Navbar.js';
 import { Header } from 'antd/lib/layout/layout';
+import mintFromApproved from './mintApprove';
 
 function ApproveRequests() {
     const [loading, setLoading] = useState(true);
@@ -98,6 +99,8 @@ function ApproveRequests() {
         //@KENTARO call minting function here
         appRequest(serverID).then((res) => console.log(res));
         //repost request with approved tag
+
+        mintFromApproved(client, quant);
     }
 
     function denyFunc(id, shipment, date, order, quant, client, serverID) {

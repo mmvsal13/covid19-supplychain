@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Menu } from 'antd';
 import { ClockCircleOutlined, MenuOutlined, TransactionOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 const { SubMenu } = Menu;
+
+
 
 function Navbar(props) {
     const [current, setcurrent] = useState('mail');
+    const history = useHistory();
 
+    const toHistory = () => history.push('/history');
+    const toTransactions = () => history.push('/status')
     function handleclick(e) {
         console.log('click', e);
         setcurrent({ current: e.key });
@@ -28,12 +34,15 @@ function Navbar(props) {
                     <Menu.Item key="setting:4">Other Option 4</Menu.Item>
                 </Menu.ItemGroup>
             </SubMenu>
-            <Menu.Item key="transaction" icon={<TransactionOutlined />}>
+            
+            <Menu.Item onClick={toTransactions} key="transaction" icon={<TransactionOutlined />}>
                 Transactions
             </Menu.Item>
-            <Menu.Item key="clock" icon={<ClockCircleOutlined />}>
+            
+            <Menu.Item  onClick = {toHistory} key="clock" icon={<ClockCircleOutlined />}>
                 History
             </Menu.Item>
+            
         </Menu>
     );
     

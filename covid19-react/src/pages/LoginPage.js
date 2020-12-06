@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Login from './Login.js';
 import Users from './Users.js';
+import Regulator from './regulator/Regulator.js'
 //what is this??
 const LS_KEY = 'login-with-metamask:auth';
 
@@ -15,20 +16,32 @@ interface State {
 
 function LoginPage(props) {
     //state: State = {}; older version of react
-    const [authState, setAuthState] = useState({});
+	const [authState, setAuthState] = useState(false);
+	const [isRegulator, setIsRegulator] = useState(false);
 
 	useEffect (()  => {
 		// Access token is stored in localstorage
 		const ls = window.localStorage.getItem(LS_KEY);
+		console.log(ls)
+		console.log(JSON.parse(ls))
 		const auth = ls && JSON.parse(ls);
-		setAuthState({auth});
+		console.log(auth)
+		setAuthState(false);
 	}, [])
-		
 	
+		
+	function handleIsRegulator(isRegulator, role) {
+		console.log("checking if it is regulator")
+		if (role.toLowerCase() == "regulator") {
+			setIsRegulator({role})
+			console.log(isRegulator)
+			console.log(authState)
+		} 
+	}
 
 	function handleLoggedIn(auth) {
 		console.log("handleLoggedIn")
-		localStorage.setItem(LS_KEY, JSON.stringify(auth));
+		//localStorage.setItem(LS_KEY, JSON.stringify(auth));
 		setAuthState({auth});
 	};
 
@@ -49,12 +62,21 @@ function LoginPage(props) {
 		return (
 			<> {
 				authState ? (
-						<Users />
+					
+						isRegulator ? (
+							<Regulator />
+						) : (
+							<Users />
+						)
+					
+					
 				) : (
 					<div className="Signin">
 				<div className="App-signin">
 					<Login onLoggedIn={handleLoggedIn}
-					auth = {authState} />
+					auth = {authState}
+					onIsRegulator = {handleIsRegulator}
+					isReg = {isRegulator} />
 				</div>
 			</div>
 				)

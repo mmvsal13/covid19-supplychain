@@ -1,26 +1,83 @@
 import Web3 from 'web3'
 //Kentaro's Infura acct
-import axios from 'axios';
-var web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/12734ccdeec244cda4d727916d6a83e8"));
+import {message} from 'antd';
+const BigNumber = require('bignumber.js');
+let web3 = undefined;
 
-function mintFromApprove(Client, Quantity) {
+async function mintFromApprove(recipient, quantity) {
 
   const tokenAddress = "0x90c1450451621D98779020b39b8951d94de1fDc2"
-  // Get Token contract instance
-  let contract = web3.eth.Contract(ABI, tokenAddress);
-
-  //mint COVID19 token with metadata from approved account using FDA account
-  contract.mint(Quantity);
-
-  // call transfer function to sent to approved account
-
-  contract.transfer(Client, (error, txHash) => {
-    // it returns tx hash because sending tx
-    console.log(txHash);
-  });
+  if (!window.ethereum) {
+    // what is window
+    console.log('checking for metamask');
+    window.alert('Please install MetaMask first.');
+    return;
 }
 
-const ABI =
+if (!web3) {
+    try {
+        // Request account access if needed
+        await window.ethereum.enable();
+
+        // We don't know window.web3 version, so we use our own instance of Web3
+        // with the injected provider given by MetaMask
+        web3 = new Web3(window.ethereum);
+    } catch (error) {
+        window.alert('You need to allow MetaMask.');
+        return;
+    }
+}
+const coinbase = await web3.eth.getCoinbase();
+if (!coinbase) {
+    window.alert('Please activate MetaMask first.');
+    return;
+}
+
+const publicAddress = coinbase.toLowerCase();
+const contractInstance = new web3.eth.Contract(
+    contractAbi,
+    '0x90c1450451621d98779020b39b8951d94de1fdc2'
+);
+
+// await contractInstance.methods
+//     .setMinterAuthorization(publicAddress, true)
+//     .send({ from: publicAddress, gasPrice: '100' });
+try {
+await contractInstance.methods.mint(1).send({ from: publicAddress, gasPrice: '1000' });
+
+let res = await contractInstance.methods
+    .getTokenByOwner(publicAddress)
+    .call();
+console.log(res);
+
+let ownedToken = [];
+for (let i =0; i< res.length; i++) {
+  if (res[i] === 1) {
+    ownedToken.append(i);
+  }
+}
+
+const newData = ownedToken.map((num) => new BigNumber(num));
+await contractInstance.methods
+    .safeBatchTransferFrom(
+        publicAddress,
+        recipient,
+        newData,
+        new Array(ownedToken.length).fill(new BigNumber(1)),
+        '0xd9b67a26'
+    )
+    .send({ from: publicAddress, gasPrice: '100' });
+
+message.loading('Updating Server');
+} catch (e) {
+  console.log(e);
+  message.error("Metamask Error")
+}
+}
+
+
+
+const contractAbi =
 [
   {
     "anonymous": false,
