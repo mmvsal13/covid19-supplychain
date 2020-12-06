@@ -177,6 +177,7 @@ function Login(props) {
                     </Button>
                     <a
                         style={{
+                            onClick: {handleLogin},
                             color: '#C71F03',
                             fontWeight: '600',
                             fontSize: '20px',

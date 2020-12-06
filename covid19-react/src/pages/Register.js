@@ -91,29 +91,25 @@ function Register() {
         //send fetch request to user public address
         //checks if user public address is in database
     }
-
-    function handleSubmit(event) {
-        axios
-            .post('/register', {
-                name: name,
-                address: address,
-                password: password,
-            })
-            .then(function (response) {
-                //server returns whether or not the address is valid
-                if (response) {
-                    //go to next page
-                } else {
-                    //go to error page
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+*/
+    async function handleSubmit() {
+        return fetch(`http://localhost:4000/api/users`, {
+                body: JSON.stringify(
+                    { 
+                        "companyName": name,
+                        "publicAddress": metamaskAddress,
+                        "address": address,
+                        "role": role
+                    }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+            }).then((response) => response.json());
         
     }
     //maybe also add helpful links to get people to make metamask acct
-    */
+    
     return (
 
         <div
@@ -171,6 +167,7 @@ function Register() {
                             height: '45px',
                             fontSize: '25px',
                             marginTop: '20px',
+                            onClick: {handleSubmit}
                         }}
                     >
                         REGISTER
