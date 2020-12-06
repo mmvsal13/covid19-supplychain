@@ -16,26 +16,32 @@ interface State {
 
 function LoginPage(props) {
     //state: State = {}; older version of react
-	const [authState, setAuthState] = useState({});
+	const [authState, setAuthState] = useState(false);
 	const [isRegulator, setIsRegulator] = useState(false);
 
 	useEffect (()  => {
 		// Access token is stored in localstorage
 		const ls = window.localStorage.getItem(LS_KEY);
+		console.log(ls)
+		console.log(JSON.parse(ls))
 		const auth = ls && JSON.parse(ls);
-		setAuthState({auth});
+		console.log(auth)
+		setAuthState(false);
 	}, [])
+	
 		
 	function handleIsRegulator(isRegulator, role) {
 		console.log("checking if it is regulator")
 		if (role.toLowerCase() == "regulator") {
-			setIsRegulator(true)
+			setIsRegulator({role})
+			console.log(isRegulator)
+			console.log(authState)
 		} 
 	}
 
 	function handleLoggedIn(auth) {
 		console.log("handleLoggedIn")
-		localStorage.setItem(LS_KEY, JSON.stringify(auth));
+		//localStorage.setItem(LS_KEY, JSON.stringify(auth));
 		setAuthState({auth});
 	};
 
