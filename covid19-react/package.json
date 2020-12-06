@@ -13,6 +13,7 @@
         "@testing-library/user-event": "^12.1.10",
         "antd": "^4.8.4",
         "axios": "^0.21.0",
+        "bignumber.js": "^9.0.1",
         "bootstrap": "^4.5.3",
         "craco-less": "^1.17.0",
         "insert-css": "2.0.0",

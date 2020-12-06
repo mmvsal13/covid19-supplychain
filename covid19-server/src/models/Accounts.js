@@ -21,7 +21,7 @@ let User = new Schema({
             allowNull: false,
         },
         supplyChainRole: {
-            type: Number
+            type: String
         },
         nonce: {
             type: Number,
@@ -32,10 +32,7 @@ let User = new Schema({
             }
         },
         //referencest to the list of Transacction objects
-        transactionHistory: {
-            type: [],
-            unique: true
-        }
+        
     },
 )
 // companyAccount.plugins(role);

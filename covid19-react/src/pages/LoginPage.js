@@ -1,6 +1,6 @@
 //import css file
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from './Login.js';
 import Users from './Users.js';
 //what is this??
@@ -17,16 +17,19 @@ function LoginPage(props) {
     //state: State = {}; older version of react
     const [authState, setAuthState] = useState({});
 
-	function componentDidMount() {
+	useEffect (()  => {
 		// Access token is stored in localstorage
 		const ls = window.localStorage.getItem(LS_KEY);
 		const auth = ls && JSON.parse(ls);
-		setAuthState(auth);
-	}
+		setAuthState({auth});
+	}, [])
+		
+	
 
 	function handleLoggedIn(auth) {
+		console.log("handleLoggedIn")
 		localStorage.setItem(LS_KEY, JSON.stringify(auth));
-		setAuthState({ auth });
+		setAuthState({auth});
 	};
 
 	function handleLoggedOut() {
@@ -44,16 +47,22 @@ function LoginPage(props) {
     */
    
 		return (
-
-
-
-            
-			<div className="Signin">
+			<> {
+				authState ? (
+						<Users />
+				) : (
+					<div className="Signin">
 				<div className="App-signin">
-                    <Login onLoggedIn={handleLoggedIn} />
+					<Login onLoggedIn={handleLoggedIn}
+					auth = {authState} />
 				</div>
 			</div>
-        )
+				)
+			
+
+				}
+				</>
+				)
 }
 
 

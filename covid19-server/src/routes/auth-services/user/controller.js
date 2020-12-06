@@ -6,14 +6,8 @@ const User = require('../../../models/Accounts.js');
 const find = (req, res, next) => {
     // If a query string ?publicAddress=... is given, then filter results
     console.log("finding publicAddress")
-	const whereClause =
-		req.query && req.query.publicAddress
-			? {
-					where: { publicAddress: req.query.publicAddress },
-			  }
-			: undefined;
-
-	return User.findAll(whereClause)
+	console.log(req.query.publicAddress)
+	return User.find({publicAddress: req.query.publicAddress})
 		.then((users) => res.json(users))
 		.catch(next);
 };
@@ -32,10 +26,22 @@ const get = (req, res, next) => {
 		.catch(next);
 };
 
-const create = (req, res, next) =>
-	User.create(req.body)
-		.then((user) => res.json(user))
-		.catch(next);
+const create = (req, res, next) => {
+	let companyName = req.body.companyName;
+    let publicAddress = req.body.publicAddress;
+	let address = req.body.address;
+	let role = req.body.role;
+    let newUser = new User({
+        companyName: companyName,
+        companyAddress: address,
+		publicAddress: publicAddress,
+		supplyChainRole: role,
+		
+    })
+    newUser.save().then(newUser => res.json(data = newUser)).catch(err => console.log(err))
+	console.log("user created")
+}
+
 
 const patch = (req, res, next) => {
 	// Only allow to fetch current user

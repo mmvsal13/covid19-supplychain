@@ -85,8 +85,12 @@ router.get('/getRecentTransactions', async (req, res) => {
 });
 
 router.post('/uploadCSV', upload.single('csv'), (req, res) => {
+    const file = fs.readFileSync(req.file.path, 'utf-8');
+    const { data } = Papa.parse(file);
+
     return res.json({
         csv: req.file.path,
+        data: data[0],
     });
 });
 
@@ -103,14 +107,14 @@ router.post('/batchTransferTokens', async (req, res) => {
         const file = fs.readFileSync(csv, 'utf-8');
         const { data } = Papa.parse(file);
 
-        let promises = data[0].map(async (val) => {
-            let token = TokenBox.find({ tokenId: val });
-            token.previousOwners.push(token.currentOwner);
-            token.currentOwner = recipient;
-            token.recentTransferDate = new Date();
-            await token.save();
-        });
-        await Promise.all(promises);
+        // let promises = data[0].map(async (val) => {
+        //     let token = TokenBox.find({ tokenId: val });
+        //     token.previousOwners.push(token.currentOwner);
+        //     token.currentOwner = recipient;
+        //     token.recentTransferDate = new Date();
+        //     await token.save();
+        // });
+        // await Promise.all(promises);
 
         let newTransaction = new Transaction({
             from: 'tbd',

@@ -1,13 +1,13 @@
-import { recoverPersonalSignature } from 'eth-sig-util'; //ethereum signing functions
-import { bufferToHex } from 'ethereumjs-util'; //ethereum utility functions
-import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import { PromiseProvider } from 'mongoose';
+const recoverPersonalSignature = require('eth-sig-util'); //ethereum signing functions
+const bufferToHex = require('ethereumjs-util')  //ethereum utility functions
+const express = require('express')
+const jwt = require('jsonwebtoken')
+const config = require('./config.js')
+//import { config } from '../../config';
+const User = require('../../../models/Accounts.js')
 
-import { config } from '../../config';
-import { User } from '../../models/user.model';
-
-export const create = (req, res, next) => {
+const create = (req, res, next) => {
+  console.log(":3")
   const { signature, publicAddress } = req.body;
   if (!signature || !publicAddress)
     return res
@@ -15,11 +15,12 @@ export const create = (req, res, next) => {
       .send({ error: 'Request should have signature and publicAddress' });
 
   return (
-    User.findOne({ where: { publicAddress } })
+    User.findOne({publicAddress: publicAddress})
       ////////////////////////////////////////////////////
       // Step 1: Get the user with the given publicAddress
       ////////////////////////////////////////////////////
       .then((user) => {
+        console.log(user)
         if (!user) {
           res.status(401).send({
             error: `User with publicAddress ${publicAddress} is not found in database`,
@@ -34,6 +35,7 @@ export const create = (req, res, next) => {
       // Step 2: Verify digital signature
       ////////////////////////////////////////////////////
       .then((user) => {
+        console.log(user)
         if (!(user instanceof User)) {
           // Should not happen, we should have already sent the response
           throw new Error('User is not defined in "Verify digital signature".');
@@ -43,8 +45,8 @@ export const create = (req, res, next) => {
 
         // We now are in possession of msg, publicAddress and signature. We
         // will use a helper from eth-sig-util to extract the address from the signature
-        const msgBufferHex = bufferToHex(Buffer.from(msg, 'utf8'));
-        const address = recoverPersonalSignature({
+        const msgBufferHex = bufferToHex.bufferToHex(Buffer.from(msg, 'utf8'));
+        const address = recoverPersonalSignature.recoverPersonalSignature({
           data: msgBufferHex,
           sig: signature,
         });
@@ -78,6 +80,7 @@ export const create = (req, res, next) => {
       // Step 4: Create JWT
       ////////////////////////////////////////////////////
       .then((user) => {
+        console.log("authentication success")
         return new Promise((resolve, reject) =>
           // https://github.com/auth0/node-jsonwebtoken
           jwt.sign(
@@ -102,3 +105,6 @@ export const create = (req, res, next) => {
       .catch(next)
   );
 };
+
+let functions = {create}
+module.exports = functions;
