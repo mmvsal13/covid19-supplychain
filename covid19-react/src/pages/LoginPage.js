@@ -27,6 +27,7 @@ function LoginPage(props) {
 		const auth = ls && JSON.parse(ls);
 		console.log(auth)
 		setAuthState(false);
+		console.log(handleLoggedIn)
 	}, [])
 	
 		
@@ -71,8 +72,10 @@ function LoginPage(props) {
 					
 					
 				) : (
+					
 					<div className="Signin">
 				<div className="App-signin">
+					
 					<Login onLoggedIn={handleLoggedIn}
 					auth = {authState}
 					onIsRegulator = {handleIsRegulator}

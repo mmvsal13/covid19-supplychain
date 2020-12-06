@@ -54,7 +54,7 @@ function Home() {
                                 color: '#620E0E',
                                 fontWeight: '800',
                                 lineHeight: '60px'
-                            }}>one line description</h4>
+                            }}>ensuring vaccine safety</h4>
                             <Link to="/login">
                             <Button style = {{
                                 color: 'white',
