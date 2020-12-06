@@ -10,6 +10,8 @@ import { Header } from 'antd/lib/layout/layout';
 function ApproveRequests() {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [approved, setApproved] = useState([]);
+    const [approvedID, setApprovedID] = useState(0);
     useEffect(() => {
         //in the future will only be getting tags that are pending
         const getData = async () => {
@@ -21,6 +23,12 @@ function ApproveRequests() {
         getData();
     });
     const columns = [
+        {
+            title: 'ID',
+            dataIndex: 'ID',
+            key: 'ID',
+            // render: (text) => <a>{text}</a>,
+        },
         {
             title: 'ShipmentID',
             dataIndex: 'ShipmentID',
@@ -69,16 +77,20 @@ function ApproveRequests() {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a onClick={(event) => approveFunc(event.target.value)} style={{color: 'green'}}>APPROVE</a>
-                    <a onClick={(event) => denyFunc(event.target.value)} style={{color: 'red'}}>DENY</a>
+                    <a onClick={(event) => approveFunc(record.ID, record.ShipmentID, record.Date, record.Order, record.Quantity, record.Tag)} 
+                                style={{color: 'green'}}>APPROVE</a>
+                    <a onClick={(event) => denyFunc(record.ID)} style={{color: 'red'}}>DENY</a>
                     {/* <a onClick={} style={{color: 'orange'}}>Message</a> */}
                 </Space>
             ),
         },
     ];
 
-    function approveFunc(message) {
-        //get request
+    function approveFunc(id, shipment, date, order, quant, tag) {
+        console.log(id, shipment, date, order, quant, tag);
+        setApprovedID(id);
+        console.log(approvedID);
+        deleteRequest();
         //chage Tag
         //post with changed tag
         //call mint function
@@ -90,7 +102,11 @@ function ApproveRequests() {
         //post with changed tag
     }
 
-
+    const deleteRequest = async () => {
+        await axios.delete('http://localhost:4000/api/request/deleteByID', { 
+            "ID" : approvedID 
+        }).then(res=>console.log(res));
+    };
 
 
 
