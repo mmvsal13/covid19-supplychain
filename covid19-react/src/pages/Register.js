@@ -4,6 +4,7 @@ import { Button, Tabs, Input, Upload, message } from 'antd';
 import SkeletonImage from 'antd/lib/skeleton/Image';
 import UserHeader from '../components/UserHeader.js'
 import Center from '../components/center.js';
+import Login from './Login.js'
 //import Web3 from 'web3';
 //import axios from 'axios';
 
@@ -17,7 +18,7 @@ function Register() {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [metamaskAddress, setMetamaskAddress] = useState('');
-    const [loading, setLoading] = useState('');
+    const [toLogin, setToLogin] = useState(false);
     const [role, setRole] = useState('')
 
     
@@ -92,8 +93,10 @@ function Register() {
         //checks if user public address is in database
     }
 */
-    async function handleSubmit() {
-        return fetch(`http://localhost:4000/api/users`, {
+    function handleSubmit() {
+        setToLogin(true)
+        console.log('hi')
+        fetch(`http://localhost:4000/api/auth/users`, {
                 body: JSON.stringify(
                     { 
                         "companyName": name,
@@ -110,9 +113,11 @@ function Register() {
     }
     //maybe also add helpful links to get people to make metamask acct
     
-    return (
-
-        <div
+    return ( <> {
+        toLogin === true? (
+            <Login />
+        ) : (
+            <div
             style={{
                 width: '100vw',
                 height: '100vh',
@@ -146,7 +151,7 @@ function Register() {
                     }}
                 >
                     <div style={{ fontSize: '20px', marginTop: '2vh' }}>Company Name</div>
-                        <Input onChange={(event) => SkeletonImage(event.target.value)} />
+                        <Input onChange={(event) => setName(event.target.value)} />
 
                         <div style={{ fontSize: '20px', marginTop: '2vh' }}>Supplychain Role</div>
                         <Input onChange={(event) => setRole(event.target.value)} />
@@ -159,7 +164,7 @@ function Register() {
                     <Button
                         variant="primary"
                         type="submit"
-                        
+                        onClick= {handleSubmit}
                         style={{
                             color: 'white',
                             backgroundColor: '#FB8027',
@@ -167,7 +172,7 @@ function Register() {
                             height: '45px',
                             fontSize: '25px',
                             marginTop: '20px',
-                            onClick: {handleSubmit}
+                        
                         }}
                     >
                         REGISTER
@@ -176,12 +181,12 @@ function Register() {
                 </div>
             </div>
         </div>
+        )
+    } </>
 
         
     );
-    
-   
-    
+  
 }
 
 export default Register;

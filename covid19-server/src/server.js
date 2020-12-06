@@ -37,6 +37,7 @@ app.use('/api/auth/', authRouter);
 app.use('/api/request/', requestRouter);
 app.use('/api/token/', tokenRouter);
 app.use('/api/users/', tokenRouter);
+app.use('/api/auth/users', userRouter)
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

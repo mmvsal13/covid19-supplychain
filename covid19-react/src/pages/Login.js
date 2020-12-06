@@ -18,14 +18,19 @@ function Login(props) {
     const [goToReg, setGoToReg] = useState(false);
 
     function handleAuthenticate(publicAddress, signature) {
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
-            //change
-            body: JSON.stringify({ publicAddress, signature }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            method: 'POST',
-        }).then((response) => response.json());
+        console.log("Handling auth")
+        if (goToReg) {
+            console.log("going to registration")
+        } else {
+            fetch(`http://localhost:4000/api/auth`, {
+                //change
+                body: JSON.stringify({ publicAddress, signature }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+            }).then((response) => response.json());
+        }
     }
 
     async function handleLogin() {
@@ -63,53 +68,76 @@ function Login(props) {
         setLoading(true);
 
         // Look if user with current publicAddress is already present on backend
-
-        fetch(`http://localhost:4000/api/users?publicAddress=${publicAddress}`, {
+        const {data} = await axios.get(`http://localhost:4000/api/auth/users?publicAddress=${publicAddress}`, {
             headers: { 'Content-Type': 'application/json' },
         })
-            .then((response) => response)
+        console.log(data)
+        if (!data[0]) {
+            setGoToReg(true)
+        } else {
+            const message = await handleSignMessage(data[0].publicAddress, data[0].nonce)
+            await handleAuthenticate(message.publicAddress, message.signature)
+        }
+
+            //.then((response) => response)
             // If yes, retrieve it. If no, create it.
-            .then((text) => console.log(text))
-            .then((users) => (users ? users[0] : 
-                
-                    setGoToReg(true)
-            ))
+            //.then((users) => (users ? users[0] : setGoToReg(true)
+            //))
             // Popup MetaMask confirmation modal to sign message
-            .then(handleSignMessage)
+            //.then((user) => handleSignMessage(user.publicAddress, user.nonce))
             // Send signature to backend on the /auth route
-            .then(handleAuthenticate)
+            //.then(handleAuthenticate)
             // Pass accessToken back to parent component (to save it in localStorage)
-            .then(onLoggedIn)
-            .catch((err) => {
-                window.alert(err);
-                setLoading(false);
-            });
+            //.then(onLoggedIn)
+            //.catch((err) => {
+                //window.alert(err);
+                //setLoading(false);
+            //});
     }
 
     async function initialValidation() {
         return name.length > 0 && address.length > 0 && password.length > 0;
     }
 
-    async function handleSignMessage(publicAddress, nonce) {
-        try {
-            const signature = await web3.eth.personal.sign(
-                `I am signing my one-time nonce: ${nonce}`,
-                publicAddress,
-                '' // MetaMask will ignore the password argument here
-            );
-        } catch (err) {
-            console.log(err);
+    async function handleSignMessage(
+		publicAddress,
+		nonce,
+	) {
+        console.log(goToReg)
+        console.log(publicAddress)
+        console.log(nonce)
+        if (goToReg || !publicAddress || !nonce) {
+            console.log("going to registration")
+        } else {
+            try {
+                console.log(publicAddress)
+                console.log(nonce)
+                const signature = await web3.eth.personal.sign(
+                    `I am signing my one-time nonce: ${nonce}`,
+                    publicAddress,
+                    '' // MetaMask will ignore the password argument here
+                );
+                console.log(publicAddress)
+        console.log(signature)
+                return { publicAddress, signature };
+            } catch (err) {
+                console.log(err)
+            }
         }
-    }
+	};
 
-    /*
-    function handleSignup() {
-        console.log("going to registration page")
-        useEffect(() => {
-                setGoToReg(true)
-        })
-    }
-    */
+    
+    function handleSignUp(publicAddress) {
+        console.log(publicAddress)
+		return fetch(`http://localhost:4000/api/auth/users`, {
+			body: JSON.stringify({ publicAddress }),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+		}).then((response) => response.json());
+	};
+    
 
     //maybe also add helpful links to get people to make metamask acct
     return ( <>
