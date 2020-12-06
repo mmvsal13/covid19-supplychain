@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import LoadingScreen from './LoadingScreen.js';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/navbar.js';
+import Navbar from '../components/Navbar.js';
 import UserHeader from '../components/UserHeader.js';
 import { Button, Tabs, Input, Upload, message } from 'antd';
 import axios from 'axios';
+import { P } from '@antv/g2plot';
 
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
@@ -14,7 +15,9 @@ function Request() {
     const [date, setDate] = useState('');
     const [orderID, setID] = useState('');
     const [quantity, setQuanity] = useState(0);
-    const [client, setClient] = useState('');
+    const [client, setClient] = useState("");
+    const tag = ["PENDING"];
+
 
     const submit = async () => {
         console.log(shipID);
@@ -23,16 +26,24 @@ function Request() {
         console.log(quantity);
         console.log(client);
 
-        message.loading('Requesting tokens');
+        await axios.get('http://localhost:4000/api/request/getRequests')
+            .then(response => console.log(response.data));
+
+
+
+        // message.loading('Requesting tokens');
+        //approval happens automatically so should i do it here
         await axios.post('http://localhost:4000/api/request/sendRequest', {
-            ShipmentID: 'shipID',
-            Date: 'jiji',
-            Order: 'orderID',
-            Quantity: 0,
-            Client: 'client',
-        });
+            "ShipmentID": shipID,
+            "Date": date,
+            "Order": orderID,
+            "Quantity": quantity,
+            "Client": client,
+            "Tag": tag,
+        }).then(response => console.log(response.data));
         message.success('The request has been received');
     };
+
 
     // useEffect(() => {
     //     setTimeout(() => setLoading(false), 6000);

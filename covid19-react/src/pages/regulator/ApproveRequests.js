@@ -1,129 +1,114 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import axios from 'axios';
 
 import { Layout } from 'antd';
 import { Table, Tag, Space } from 'antd';
-import Navbar from '../../components/navbar.js';
+import Navbar from '../../components/Navbar.js';
+import { Header } from 'antd/lib/layout/layout';
 
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: '# of Vaccines',
-        dataIndex: 'amount',
-        key: 'amount',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (tags) => (
-            <>
-                {tags.map((tag) => {
-                    let color = 'magenta';
-                    if (tag === 'Untrusted') {
-                        color = 'blue';
-                    } else if (tag === 'Distributor') {
-                        color = 'geekblue';
-                    } else if (tag === 'Manufacturer') {
-                        color = 'geekblue';
-                    } else if (tag === 'Retailer') {
-                        color = 'geekblue';
-                    } else if (tag === 'Hospital') {
-                        color = 'geekblue';
-                    } else if (tag === 'Trusted') {
-                        color = 'purple';
-                    } else if (tag === 'Trump') {
-                        color = 'volcano';
-                    } else if (tag === 'BTC tps') {
-                        color = 'green';
-                    } else if (tag === 'VISA tps') {
-                        color = 'green';
-                    } else if (tag === 'Oski') {
-                        color = 'green';
-                    } else if (tag === 'Sus') {
-                        color = 'green';
-                    } else if (tag === 'Simp') {
-                        color = 'green';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-            <Space size="middle">
-                <a>Approve</a>
-                <a>Deny</a>
-                <a>Message</a>
-            </Space>
-        ),
-    },
-];
+function ApproveRequests() {
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const getData = async () => {
+            await axios.get('http://localhost:4000/api/request/getRequests')
+                .then(res=>setData(res.data.requests));
+            console.log(data);
+            // setLoading(false);
+        };
+        getData();
+    });
+    const columns = [
+        {
+            title: 'ShipmentID',
+            dataIndex: 'ShipmentID',
+            key: 'ShipmentID',
+            // render: (text) => <a>{text}</a>,
+        },
+        {
+            title: 'Date',
+            dataIndex: 'Date',
+            key: 'Date',
+        },
+        {
+            title: 'Order ID',
+            dataIndex: 'Order',
+            key: 'Order',
+        },
+        {
+            title: 'Quantity',
+            dataIndex: 'Quantity',
+            key: 'Quantity',
+        },
+        {
+            title: 'Tag',
+            key: 'Tag',
+            dataIndex: 'Tag',
+            render: (tags) => (
+                <>
+                    {tags.map((tag) => {
+                        let color = 'yellow';
+                        if (tag === 'APPROVED') {
+                            color = 'green';
+                        } else if (tag === 'REJECTED') {
+                            color = 'red';
+                        }
+                        return (
+                            <Tag color={color} key={tag}>
+                                {tag.toUpperCase()}
+                            </Tag>
+                        );
+                    })}
+                </>
+            ),
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (text, record) => (
+                <Space size="middle">
+                    <a style={{color: 'green'}}>Approve</a>
+                    <a style={{color: 'red'}}>Deny</a>
+                    <a style={{color: 'orange'}}>Message</a>
+                </Space>
+            ),
+        },
+    ];
 
-const data = [
-    {
-        key: '1',
-        name: 'Trump COVID Co.',
-        amount: 6900,
-        address: 'New York No. 1 Lake Park',
-        tags: ['Untrusted', 'Trump', 'Retailer', 'Distributor'],
-    },
-    {
-        key: '2',
-        name: 'Ayush Inc.',
-        amount: 420,
-        address: 'London No. 1 Lake Park',
-        tags: ['Trusted', 'Manufacturer'],
-    },
-    {
-        key: '3',
-        name: 'Moderna',
-        amount: 5139009,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['Supplier', 'BTC tps', 'Trusted'],
-    },
-    {
-        key: '3',
-        name: 'Etherium Inc.',
-        amount: 666,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['VISA tps', 'Oski'],
-    },
-    {
-        key: '3',
-        name: 'Allen Lin Corp.',
-        amount: 777,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['Sus', 'Oski'],
-    },
-];
 
-function Approve_requests() {
+    //dummy data for now will get data from server in the future
+    const dummy = [{
+        ShipmentID: "shipID",
+        Date: "date",
+        Order: "orderID",
+        Quantity: 0,
+        Client: "user",
+        Tag: ["APPROVED"],
+    }];
+
     return (
         <>
-            <Navbar />
-
-            <Table columns={columns} dataSource={data} />
-            {/* Kentaro this is broken rn */}
+        <div style={{ width: '100vw', height: '100vh', backgroundColor: '#E9FFFA' }}>
+            <Navbar/>
+            <div style={{ margin: '5vw' }}>
+                <div style={{
+                    width: '90vw',
+                    height: '70vh',
+                    backgroundColor: 'rgba(255,255,255, 1)',
+                    borderLeft: '2vw',
+                    borderBottomLeftRadius: '2vw',
+                    borderBottomRightRadius: '2vw',
+                    padding: '3vh 5vw 3vh 5vw',
+                    }}> 
+                    <h1>Request Status</h1>
+                    <Table columns={columns} dataSource={data} size="small"/>
+                </div>
+            </div>
+        </div>
         </>
-    );
+    );  
 }
+//rgba(255,255,255, 0.3)
 
-export default Approve_requests;
+export default ApproveRequests;

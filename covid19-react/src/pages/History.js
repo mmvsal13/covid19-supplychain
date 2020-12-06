@@ -10,7 +10,7 @@ import {
     CheckOutlined,
     CloseOutlined,
 } from '@ant-design/icons';
-import Navbar from '../components/navbar.js';
+import Navbar from '../components/Navbar.js';
 
 const { Step } = Steps;
 

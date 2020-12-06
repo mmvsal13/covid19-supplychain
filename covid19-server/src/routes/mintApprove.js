@@ -6,7 +6,8 @@ import COVID19Token from '../../build/contracts/COVID19Supplychain.json'
 
 const tokenAddress = "0x90c1450451621D98779020b39b8951d94de1fDc2"
 
-//get the requests
+//get the request by ID(Each request will have a uniqe ID)
+
 
 //get toAddress, amount_to_mint,  from get function
 
