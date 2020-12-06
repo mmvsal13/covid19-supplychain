@@ -87,13 +87,13 @@ function ApproveRequests() {
     ];
 
     function approveFunc(id, shipment, date, order, quant, tag) {
+        //pass the parameters ^ to minting function
         console.log(id, shipment, date, order, quant, tag);
+        //@KENTARO call minting function here
         setApprovedID(id);
         console.log(approvedID);
         deleteRequest();
-        //chage Tag
-        //post with changed tag
-        //call mint function
+        //postRequest() with updated tag
     }
 
     function denyFunc(message) {
