@@ -10,16 +10,25 @@ import { Header } from 'antd/lib/layout/layout';
 function ApproveRequests() {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [approved, setApproved] = useState([]);
+    const [approvedID, setApprovedID] = useState(0);
     useEffect(() => {
+        //in the future will only be getting tags that are pending
         const getData = async () => {
             await axios.get('http://localhost:4000/api/request/getRequests')
                 .then(res=>setData(res.data.requests));
-            console.log(data);
+            // console.log(data);
             // setLoading(false);
         };
         getData();
     });
     const columns = [
+        {
+            title: 'ID',
+            dataIndex: 'ID',
+            key: 'ID',
+            // render: (text) => <a>{text}</a>,
+        },
         {
             title: 'ShipmentID',
             dataIndex: 'ShipmentID',
@@ -68,13 +77,38 @@ function ApproveRequests() {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a style={{color: 'green'}}>Approve</a>
-                    <a style={{color: 'red'}}>Deny</a>
-                    <a style={{color: 'orange'}}>Message</a>
+                    <a onClick={(event) => approveFunc(record.ID, record.ShipmentID, record.Date, record.Order, record.Quantity, record.Tag)} 
+                                style={{color: 'green'}}>APPROVE</a>
+                    <a onClick={(event) => denyFunc(record.ID)} style={{color: 'red'}}>DENY</a>
+                    {/* <a onClick={} style={{color: 'orange'}}>Message</a> */}
                 </Space>
             ),
         },
     ];
+
+    function approveFunc(id, shipment, date, order, quant, tag) {
+        //pass the parameters ^ to minting function
+        console.log(id, shipment, date, order, quant, tag);
+        //@KENTARO call minting function here
+        setApprovedID(id);
+        console.log(approvedID);
+        deleteRequest();
+        //postRequest() with updated tag
+    }
+
+    function denyFunc(message) {
+        //get request
+        //change Tag
+        //post with changed tag
+    }
+
+    const deleteRequest = async () => {
+        await axios.delete('http://localhost:4000/api/request/deleteByID', { 
+            "ID" : approvedID 
+        }).then(res=>console.log(res));
+    };
+
+
 
 
     //dummy data for now will get data from server in the future
@@ -110,5 +144,6 @@ function ApproveRequests() {
     );  
 }
 //rgba(255,255,255, 0.3)
+
 
 export default ApproveRequests;

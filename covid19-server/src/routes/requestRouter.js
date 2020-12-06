@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
 
 
 router.post('/sendRequest', (req, res) => {
+    let id = req.body.ID;
     let shipID = req.body.ShipmentID;
     let date = req.body.Date;
     let orderID = req.body.Order;
@@ -18,6 +19,7 @@ router.post('/sendRequest', (req, res) => {
     let user = req.body.Client;
     let tag = req.body.Tag;
     let newRequest = new Request({
+        ID: id,
         ShipmentID: shipID,
         Date: date,
         Order: orderID,
@@ -68,15 +70,18 @@ router.get('/getAllStatusRequests', async (req, res) => {
 });
 
 //Gets a request by its key
-// router.get('/getRequestByKey', async (req, res) => {
-//     let id = req.body.Key;
-//     try {
-//         let requests = await Request.find({ Key: id }).sort({ Quantity: -1 });
-//         return res.status(200).json({ requests });
-//     } catch (e) {
-//         return res.status(500).send(e.message);
-//     }
-// });
+router.delete('/deleteByID', async (req, res) => {
+    let id = req.body.ID;
+    Request.Remove({ ID: id }, function(err) {
+        if (!err) {
+            return res.send('User deleted!');
+        } else {
+            return res.send('Error deleting user!');
+        }
+    });
+
+});
+   
 
 
 module.exports = router;
