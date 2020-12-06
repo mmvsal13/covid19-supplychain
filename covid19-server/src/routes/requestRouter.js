@@ -59,10 +59,9 @@ router.get('/getRequestsByOwner', async (req, res) => {
 });
 
 //Gets a certain type of request(All pending, all approved, all denied) NOT FUNCTIONAL YET
-router.get('/getAllStatusRequests', async (req, res) => {
-    let status = req.body.Tag;
+router.get('/getAllPending', async (req, res) => {
     try {
-        let requests = await Request.find({ Tag: status }).sort({ Quantity: -1 });
+        let requests = await Request.find({ Tag: ['PENDING'] }).sort({ Quantity: -1 });
         return res.status(200).json({ requests });
     } catch (e) {
         return res.status(500).send(e.message);
@@ -70,17 +69,29 @@ router.get('/getAllStatusRequests', async (req, res) => {
 });
 
 //Gets a request by its key
-router.delete('/deleteByID', async (req, res) => {
-    let id = req.body.ID;
-    Request.Remove({ ID: id }, function(err) {
-        if (!err) {
-            return res.send('User deleted!');
-        } else {
-            return res.send('Error deleting user!');
-        }
+router.patch('/approve', async (req, res) => {
+    let id = req.body._id;
+    try {
+        let curr = await Request.findById(id);
+        curr.Tag = ['APPROVED'];
+        await curr.save();
+        return res.status(200).json({ curr });
+    } catch (err) {
+        res.send(err)
+    }
+});
+
+router.patch('/reject', async (req, res) => {
+    let id = req.body._id;
+    try {
+        let curr = await Request.findById(id);
+        curr.Tag = ['REJECTED'];
+        await curr.save();
+    } catch (err) {
+        res.send(err)
+    }
     });
 
-});
    
 
 

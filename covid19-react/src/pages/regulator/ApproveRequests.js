@@ -10,12 +10,12 @@ import { Header } from 'antd/lib/layout/layout';
 function ApproveRequests() {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    const [approved, setApproved] = useState([]);
-    const [approvedID, setApprovedID] = useState(0);
+    // const [approved, setApproved] = useState([]);
+    // const [approvedID, setApprovedID] = useState(0);
     useEffect(() => {
         //in the future will only be getting tags that are pending
         const getData = async () => {
-            await axios.get('http://localhost:4000/api/request/getRequests')
+            await axios.get('http://localhost:4000/api/request/getAllPending')
                 .then(res=>setData(res.data.requests));
             // console.log(data);
             // setLoading(false);
@@ -27,6 +27,12 @@ function ApproveRequests() {
             title: 'ID',
             dataIndex: 'ID',
             key: 'ID',
+            // render: (text) => <a>{text}</a>,
+        },
+        {
+            title: 'Client',
+            dataIndex: 'Client',
+            key: 'Client',
             // render: (text) => <a>{text}</a>,
         },
         {
@@ -77,39 +83,41 @@ function ApproveRequests() {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a onClick={(event) => approveFunc(record.ID, record.ShipmentID, record.Date, record.Order, record.Quantity, record.Tag)} 
+                    <a onClick={(event) => approveFunc(record.ID, record.ShipmentID, record.Date, record.Order, record.Quantity, record.Client, record._id)} 
                                 style={{color: 'green'}}>APPROVE</a>
-                    <a onClick={(event) => denyFunc(record.ID)} style={{color: 'red'}}>DENY</a>
+                    <a onClick={(event) => denyFunc(record.ID, record.ShipmentID, record.Date, record.Order, record.Quantity, record.Client, record._id)} style={{color: 'red'}}>DENY</a>
                     {/* <a onClick={} style={{color: 'orange'}}>Message</a> */}
                 </Space>
             ),
         },
     ];
 
-    function approveFunc(id, shipment, date, order, quant, tag) {
+    function approveFunc(id, shipment, date, order, quant, client, serverID) {
         //pass the parameters ^ to minting function
-        console.log(id, shipment, date, order, quant, tag);
+        console.log(serverID);
         //@KENTARO call minting function here
-        setApprovedID(id);
-        console.log(approvedID);
-        deleteRequest();
-        //postRequest() with updated tag
+        appRequest(serverID).then((res) => console.log(res));
+        //repost request with approved tag
     }
 
-    function denyFunc(message) {
-        //get request
-        //change Tag
-        //post with changed tag
+    function denyFunc(id, shipment, date, order, quant, client, serverID) {
+        console.log(serverID);
+        rejRequest(serverID).then((res) => console.log(res));
     }
 
-    const deleteRequest = async () => {
-        await axios.delete('http://localhost:4000/api/request/deleteByID', { 
-            "ID" : approvedID 
-        }).then(res=>console.log(res));
+    const appRequest = async (id) => {
+        let res = await axios.patch('http://localhost:4000/api/request/approve', { 
+            _id : id,
+        });
+        return res;
     };
 
-
-
+    const rejRequest = async (id) => {
+        let res = await axios.patch('http://localhost:4000/api/request/reject', { 
+            _id : id,
+        });
+        return res;
+    };
 
     //dummy data for now will get data from server in the future
     const dummy = [{
