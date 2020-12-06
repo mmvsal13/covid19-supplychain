@@ -80,6 +80,7 @@ const create = (req, res, next) => {
       // Step 4: Create JWT
       ////////////////////////////////////////////////////
       .then((user) => {
+        console.log("authentication success")
         return new Promise((resolve, reject) =>
           // https://github.com/auth0/node-jsonwebtoken
           jwt.sign(
