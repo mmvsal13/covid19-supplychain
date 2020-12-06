@@ -34,7 +34,7 @@ function Login(props) {
     }
 
     async function handleLogin() {
-        const { onLoggedIn, auth } = props;
+        const { onLoggedIn, auth, onIsRegulator, isRegulator} = props;
         console.log('handling login');
         // Check if MetaMask is installed
         if (!window.ethereum) {
@@ -79,6 +79,7 @@ function Login(props) {
             await handleAuthenticate(message.publicAddress, message.signature)
             try {
                 await onLoggedIn(auth)
+                await onIsRegulator(isRegulator, data[0].role)
                 
             } catch (err) {
                 await setLoading(false)

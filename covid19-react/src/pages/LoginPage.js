@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Login from './Login.js';
 import Users from './Users.js';
+import Regulator from './regulator/Regulator.js'
 //what is this??
 const LS_KEY = 'login-with-metamask:auth';
 
@@ -15,7 +16,8 @@ interface State {
 
 function LoginPage(props) {
     //state: State = {}; older version of react
-    const [authState, setAuthState] = useState({});
+	const [authState, setAuthState] = useState({});
+	const [isRegulator, setIsRegulator] = useState(false);
 
 	useEffect (()  => {
 		// Access token is stored in localstorage
@@ -24,7 +26,12 @@ function LoginPage(props) {
 		setAuthState({auth});
 	}, [])
 		
-	
+	function handleIsRegulator(isRegulator, role) {
+		console.log("checking if it is regulator")
+		if (role.toLowerCase() == "regulator") {
+			setIsRegulator(true)
+		} 
+	}
 
 	function handleLoggedIn(auth) {
 		console.log("handleLoggedIn")
@@ -49,12 +56,21 @@ function LoginPage(props) {
 		return (
 			<> {
 				authState ? (
-						<Users />
+					
+						isRegulator ? (
+							<Regulator />
+						) : (
+							<Users />
+						)
+					
+					
 				) : (
 					<div className="Signin">
 				<div className="App-signin">
 					<Login onLoggedIn={handleLoggedIn}
-					auth = {authState} />
+					auth = {authState}
+					onIsRegulator = {handleIsRegulator}
+					isReg = {isRegulator} />
 				</div>
 			</div>
 				)
