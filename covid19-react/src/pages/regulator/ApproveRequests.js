@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { Layout } from 'antd';
 import { Table, Tag, Space } from 'antd';
-import Navbar from '../../components/Navbar.js';
+import Navbar from '../../components/navbar.js';
 import { Header } from 'antd/lib/layout/layout';
 import mintFromApproved from './mintApprove';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Input, Upload, message } from 'antd';
 import { LoadingOutlined, PaperClipOutlined } from '@ant-design/icons';
-import Navbar from '../components/Navbar.js';
+import Navbar from '../components/navbar.js';
 import axios from 'axios';
 import UserHeader from '../components/UserHeader';
 import Web3 from 'web3';

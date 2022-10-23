@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 const { SubMenu } = Menu;
 
-
-
 function Navbar(props) {
     const [current, setcurrent] = useState('mail');
     const history = useHistory();
